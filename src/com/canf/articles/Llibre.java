@@ -5,7 +5,10 @@
  */
 package com.canf.articles;
 
+import com.canf.excepcions.LlibreException;
 import static com.canf.articles.tipusArticle.LLIBRE;
+import com.canf.excepcions.ArticleException;
+import com.canf.utilitats.Validacions;
 
 /**
  *
@@ -18,21 +21,22 @@ public class Llibre extends Article {
     private String nomEditorial;
     private int numPagines;
 
-    public Llibre(String isbn, String nomAutor, String nomEditorial, int numPagines, int referencia, String nom, String descripcio, double preuUnitari, int quantitat) {
-        super(referencia, nom, descripcio, preuUnitari, quantitat);
-        this.isbn = isbn;
-        this.nomAutor = nomAutor;
-        this.nomEditorial = nomEditorial;
-        this.numPagines = numPagines;
-    }
-
-    
+    public Llibre(String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
+        super(nom, descripcio, preuUnitari, quantitat);
+        this.setIsbn(isbn);
+        this.setNomAutor(nomAutor);
+        this.setNomEditorial(nomEditorial);
+        this.setNumPagines(numPagines);
+    }   
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public void setIsbn(String isbn) throws LlibreException {
+         if(!Validacions.validaCadena(isbn)){
+            throw new LlibreException("L'ISBN del llibre no pot ser null ni pot estar buit");
+        }
         this.isbn = isbn;
     }
 
@@ -40,7 +44,10 @@ public class Llibre extends Article {
         return nomAutor;
     }
 
-    public void setNomAutor(String nomAutor) {
+    public void setNomAutor(String nomAutor) throws LlibreException {
+        if(!Validacions.validaCadena(nomAutor)){
+            throw new LlibreException("El nom de l'autor no pot ser null ni pot estar buit");
+        }
         this.nomAutor = nomAutor;
     }
 
@@ -48,7 +55,10 @@ public class Llibre extends Article {
         return nomEditorial;
     }
 
-    public void setNomEditorial(String nomEditorial) {
+    public void setNomEditorial(String nomEditorial) throws LlibreException {
+        if(!Validacions.validaCadena(nomEditorial)){
+           throw new LlibreException("El nom de l'editorial no pot ser null ni pot estar buit");
+        }
         this.nomEditorial = nomEditorial;
     }
 

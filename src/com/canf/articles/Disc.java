@@ -5,7 +5,10 @@
  */
 package com.canf.articles;
 
+import com.canf.excepcions.DiscException;
 import static com.canf.articles.tipusArticle.DISC;
+import com.canf.excepcions.ArticleException;
+import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
 /**
@@ -18,11 +21,11 @@ public class Disc extends Article{
     private ArrayList<String> llistaCansons;
     private String discografica;
 
-    public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, int referencia, String nom, String descripcio, double preuUnitari, int quantitat) {
-        super(referencia, nom, descripcio, preuUnitari, quantitat);
-        this.interpret = interpret;
-        this.llistaCansons = llistaCansons;
-        this.discografica = discografica;
+    public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException, DiscException {
+        super(nom, descripcio, preuUnitari, quantitat);
+        this.setInterpret(interpret);
+        this.setDiscografica(discografica);
+        this.llistaCansons = new ArrayList<>();
     }   
 
     public String getInterpret() {
@@ -37,15 +40,14 @@ public class Disc extends Article{
         return llistaCansons;
     }
 
-    public void setLlistaCansons(ArrayList<String> llistaCansons) {
-        this.llistaCansons = llistaCansons;
-    }
-
     public String getDiscografica() {
         return discografica;
     }
 
-    public void setDiscografica(String discografica) {
+    public void setDiscografica(String discografica) throws DiscException {
+        if(!Validacions.validaCadena(discografica)){
+            throw new DiscException("El nom de la discogràfica no pot ser null ni pot estar buit");
+        }
         this.discografica = discografica;
     }
 

@@ -1,6 +1,10 @@
 package com.canf.proves;
 
+import com.canf.excepcions.PeliculaException;
 import com.canf.articles.Article;
+import com.canf.articles.Disc;
+import com.canf.excepcions.DiscException;
+import com.canf.excepcions.ArticleException;
 import java.util.ArrayList;
 
 /*
@@ -8,7 +12,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author antonialoy
@@ -22,12 +25,24 @@ public class provesCanf {
         provesCanf p = new provesCanf();
         p.provesXMLArticles();
     }
-    
+
     public void provesXMLArticles() {
-        ArrayList<Article> articles= new ArrayList<>();
-        Article x = new Article(1809, "Disc de Vinil dels Beatles", "Disc de Vinil exclusiu amb cites de John Lennon", 500, 2);
-        articles.add(x);
-        x.mostraXML(articles);
+        ArrayList<Article> articles = new ArrayList<>();
+        ArrayList<String> discExclusiuBeatles = new ArrayList<>();      
+        try {
+            discExclusiuBeatles.add("Love me Do");
+            Article x = new Disc("Beatles", discExclusiuBeatles,"desconeguda", 
+            "Disc de Vinil dels Beatles", "Disc de Vinil exclusiu dels Beatles", 
+            500.0, 2);
+            
+            Article y = new Disc("", discExclusiuBeatles, "", "","", 25.0, 1);
+            articles.add(x);
+            articles.add(y);
+            x.mostraXML(articles);
+        } catch (ArticleException | DiscException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
-    
+
 }

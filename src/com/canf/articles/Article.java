@@ -5,21 +5,25 @@
  */
 package com.canf.articles;
 
+import com.canf.excepcions.ArticleException;
+import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
 /**
  *
  * @author antonialoy
  */
-public class Article {
+public abstract class Article {
     private int referencia;
+    private static int numReferencia = 0;
+    
     private String nom;
     private String descripcio;
     private double preuUnitari;
     private int quantitat;
 
-    public Article(int referencia, String nom, String descripcio, double preuUnitari, int quantitat) {
-        this.setReferencia(referencia);
+    public Article(String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException {
+        referencia = numReferencia++;
         this.setNom(nom);
         this.setDescripcio(descripcio);
         this.setPreuUnitari(preuUnitari);
@@ -30,15 +34,14 @@ public class Article {
         return referencia;
     }
 
-    public void setReferencia(int referencia) {
-        this.referencia = referencia;
-    }
-
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom) throws ArticleException {
+        if(!Validacions.validaCadena(nom)) {
+            throw new ArticleException("El nom no pot ser null ni pot estar buit");
+        }
         this.nom = nom;
     }
 
@@ -46,7 +49,10 @@ public class Article {
         return descripcio;
     }
 
-    public void setDescripcio(String descripcio) {
+    public void setDescripcio(String descripcio) throws ArticleException {
+        if(!Validacions.validaCadena(descripcio)) {
+            throw new ArticleException("La descripció no pot ser null ni pot estar buida");
+        }
         this.descripcio = descripcio;
     }
 

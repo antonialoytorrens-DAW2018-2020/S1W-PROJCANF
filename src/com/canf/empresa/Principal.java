@@ -39,16 +39,8 @@ public class Principal {
         return llistaArticles;
     }
 
-    public void setLlistaArticles(ArrayList<Article> llistaArticles) {
-        this.llistaArticles = llistaArticles;
-    }
-
     public HashSet<Magatzem> getMagatzems() {
         return magatzems;
-    }
-
-    public void setMagatzems(HashSet<Magatzem> magatzems) {
-        this.magatzems = magatzems;
     }
 
     @Override

@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.canf.empresa;
+package com.canf.utilitats;
 
 /**
  *
  * @author antonialoy
  */
-public class Magatzem {
-    private String nom;
+public abstract class Validacions {
+    public static boolean validaCadena(String cadena) {
+        return cadena != null && !"".equals(cadena.trim());
+    }
 }

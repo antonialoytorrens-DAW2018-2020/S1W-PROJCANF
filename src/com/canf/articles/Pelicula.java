@@ -5,7 +5,10 @@
  */
 package com.canf.articles;
 
+import com.canf.excepcions.PeliculaException;
 import static com.canf.articles.tipusArticle.PELÍCULA;
+import com.canf.excepcions.ArticleException;
+import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
 /**
@@ -18,8 +21,8 @@ public class Pelicula extends Article {
     private ArrayList<String> llistaActors;
     private String sinopsi;
 
-    public Pelicula(String nomDirector, ArrayList<String> llistaActors, String sinopsi, int referencia, String nom, String descripcio, double preuUnitari, int quantitat) {
-        super(referencia, nom, descripcio, preuUnitari, quantitat);
+    public Pelicula(String nomDirector, ArrayList<String> llistaActors, String sinopsi, String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
+        super(nom, descripcio, preuUnitari, quantitat);
         this.nomDirector = nomDirector;
         this.llistaActors = llistaActors;
         this.sinopsi = sinopsi;
@@ -29,7 +32,10 @@ public class Pelicula extends Article {
         return nomDirector;
     }
 
-    public void setNomDirector(String nomDirector) {
+    public void setNomDirector(String nomDirector) throws PeliculaException {
+        if(!Validacions.validaCadena(nomDirector)) {
+            throw new PeliculaException("El nom del director/a no pot ser null ni pot estar buit");
+        }
         this.nomDirector = nomDirector;
     }
 
@@ -37,15 +43,14 @@ public class Pelicula extends Article {
         return llistaActors;
     }
 
-    public void setLlistaActors(ArrayList<String> llistaActors) {
-        this.llistaActors = llistaActors;
-    }
-
     public String getSinopsi() {
         return sinopsi;
     }
 
-    public void setSinopsi(String sinopsi) {
+    public void setSinopsi(String sinopsi) throws PeliculaException {
+        if(!Validacions.validaCadena(sinopsi)) {
+            throw new PeliculaException("La sinopsi no pot ser null ni pot estar buida");
+        }
         this.sinopsi = sinopsi;
     }
 
