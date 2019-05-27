@@ -20,13 +20,15 @@ public abstract class Article {
     private String nom;
     private String descripcio;
     private double preuUnitari;
+    private tipusArticle tipusArticle;
     private int quantitat;
 
-    public Article(String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException {
+    public Article(String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException {
         referencia = numReferencia++;
         this.setNom(nom);
         this.setDescripcio(descripcio);
         this.setPreuUnitari(preuUnitari);
+        this.tipusArticle = tipusArticle;
         this.setQuantitat(quantitat);
     }
     
@@ -70,6 +72,14 @@ public abstract class Article {
 
     public void setQuantitat(int quantitat) {
         this.quantitat = quantitat;
+    }
+
+    public tipusArticle getTipusArticle() {
+        return tipusArticle;
+    }
+
+    public void setTipusArticle(tipusArticle tipusArticle) {
+        this.tipusArticle = tipusArticle;
     }
 
     public void mostraXML(ArrayList<Article> x) {

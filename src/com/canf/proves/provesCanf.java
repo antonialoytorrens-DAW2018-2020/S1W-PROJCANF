@@ -3,6 +3,7 @@ package com.canf.proves;
 import com.canf.excepcions.PeliculaException;
 import com.canf.articles.Article;
 import com.canf.articles.Disc;
+import static com.canf.articles.tipusArticle.DISC;
 import com.canf.excepcions.DiscException;
 import com.canf.excepcions.ArticleException;
 import java.util.ArrayList;
@@ -33,9 +34,9 @@ public class provesCanf {
             discExclusiuBeatles.add("Love me Do");
             Article x = new Disc("Beatles", discExclusiuBeatles,"desconeguda", 
             "Disc de Vinil dels Beatles", "Disc de Vinil exclusiu dels Beatles", 
-            500.0, 2);
+            DISC, 500.0, 2);
             
-            Article y = new Disc("", discExclusiuBeatles, "", "","", 25.0, 1);
+            Article y = new Disc("", discExclusiuBeatles, "", "","", DISC, 25.0, 1);
             articles.add(x);
             articles.add(y);
             x.mostraXML(articles);
