@@ -1,43 +1,54 @@
 package com.canf.proves;
 
-import com.canf.excepcions.PeliculaException;
 import com.canf.articles.Article;
 import com.canf.articles.Disc;
+import com.canf.articles.Pelicula;
+import com.canf.articles.Venta;
 import com.canf.excepcions.DiscException;
 import com.canf.excepcions.ArticleException;
+import com.canf.excepcions.PeliculaException;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author antonialoy
- */
 public class provesCanf {
 
-    /**
-     * @param args the command line arguments
-     */
+    public void marta() {
+        try {
+            //Llista actors
+            ArrayList<String> actors = new ArrayList<>();
+            actors.add("Marta");
+            //Articles
+            Pelicula pelicula = new Pelicula("Joselito", actors, "sinopsi", "La vida de Joselito", "descripcio", 2, 12);
+            Pelicula pelicula2 = new Pelicula("Joselito2", actors, "sinopsi2", "La vida de Joselito2", "descripcio2", 2, 2);
+            //Llista articles
+            ArrayList<Article> ticket = new ArrayList<>();
+            ticket.add(pelicula);
+            ticket.add(pelicula2);
+            pelicula.mostraXML(ticket);
+            Venta venta = new Venta(ticket);            
+            System.out.println(venta);
+            
+        } catch (ArticleException | PeliculaException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     public static void main(String[] args) {
         provesCanf p = new provesCanf();
-        p.provesXMLArticles();
+         //p.provesXMLArticles();
+        p.marta();
     }
 
     public void provesXMLArticles() {
         ArrayList<Article> articles = new ArrayList<>();
-        ArrayList<String> discExclusiuBeatles = new ArrayList<>();      
+        ArrayList<String> discExclusiuBeatles = new ArrayList<>();
         try {
             discExclusiuBeatles.add("Love me Do");
-            Article x = new Disc("Beatles", discExclusiuBeatles,"desconeguda", 
-            "Disc de Vinil dels Beatles", "Disc de Vinil exclusiu dels Beatles", 
-            500.0, 2);
-            
-            Article y = new Disc("", discExclusiuBeatles, "", "","", 25.0, 1);
+            Article x = new Disc("Beatles", discExclusiuBeatles, "desconeguda",
+                    "Disc de Vinil dels Beatles", "Disc de Vinil exclusiu dels Beatles",
+                    500.0, 2);
+
             articles.add(x);
-            articles.add(y);
             x.mostraXML(articles);
         } catch (ArticleException | DiscException e) {
             System.out.println(e.getMessage());

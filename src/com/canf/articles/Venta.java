@@ -1,25 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.canf.articles;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-/**
- *
- * @author antonialoy
- */
 public class Venta {
-    private Article producte;
-    private int quantitat;
+    private ArrayList<Article> productes;
+    private int quantitat = 0;
     private LocalDate data;
 
-    public Article getProducte() {
-        return producte;
+    public Venta(ArrayList<Article> productes) {
+        this.productes = productes;
+        this.quantitat = quantitat++;
+        this.data = LocalDate.now();
+        disminuirQuantitat(productes);
     }
-
+    
+    public ArrayList<Article> getProductes() {
+        return productes;
+    }
+    
     public int getQuantitat() {
         return quantitat;
     }
@@ -35,10 +34,16 @@ public class Venta {
     public void setData(LocalDate data) {
         this.data = data;
     }
+    
+    public void disminuirQuantitat(ArrayList<Article> productes) {
+        for (Article producte : productes) {
+            producte.setQuantitat(producte.getQuantitat() - 1);
+        }
+    }
 
     @Override
     public String toString() {
-        return "Venta{" + "producte=" + producte + ", quantitat=" + quantitat + ", data=" + data + '}';
+        return "Venta{" + "productes=" + productes + ", quantitat=" + quantitat + ", data=" + data + '}';
     }
     
 }
