@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * @author antonialoy
  */
 public class Disc extends Article{
-    private final tipusArticle tipus = DISC;
     private String interpret;
     private ArrayList<String> llistaCansons;
     private String discografica;
@@ -53,7 +52,7 @@ public class Disc extends Article{
 
     @Override
     public String toString() {
-        return "Disc{" +super.toString()+ "tipus=" + tipus + ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
+        return "Disc{" +super.toString()+ ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
     }
     
 }

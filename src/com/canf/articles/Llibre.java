@@ -15,7 +15,6 @@ import com.canf.utilitats.Validacions;
  * @author antonialoy
  */
 public class Llibre extends Article {
-    private final tipusArticle tipus = LLIBRE;
     private String isbn;
     private String nomAutor;
     private String nomEditorial;
@@ -72,7 +71,7 @@ public class Llibre extends Article {
 
     @Override
     public String toString() {
-        return "Llibre{" +super.toString()+ "tipus=" + tipus + ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
+        return "Llibre{" +super.toString()+ ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
     }
     
     
