@@ -1,11 +1,18 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.canf.empresa;
 
 import com.canf.articles.Article;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
+/**
+ *
+ * @author antonialoy
+ */
 public class Principal {
     private String nom;
     private int codi;

@@ -1,26 +1,33 @@
 package com.canf.empresa;
 
 import com.canf.articles.Article;
-import com.canf.articles.*;
-import static com.canf.articles.tipusArticle.*;
+import com.canf.articles.Disc;
+import com.canf.articles.Llibre;
+import com.canf.articles.Pelicula;
+import com.canf.articles.Venta;
+import static com.canf.articles.tipusArticle.DISC;
+import static com.canf.articles.tipusArticle.LLIBRE;
+import static com.canf.articles.tipusArticle.PELÍCULA;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author antonialoy
+ */
 public class Magatzem {
 
     private int codi;
     private String nom;
     private ArrayList<Article> llistaArticles;
-    private ArrayList<Venta> historialVentes;    
+    private ArrayList<Venta> historialVentes;
 
     public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) {
+        this.setNom(nom);
         this.codi = codi;
-        this.nom = nom;
-        this.llistaArticles = llistaArticles;
-        this.historialVentes = historialVentes;
+        this.llistaArticles = new ArrayList<>();
+        this.historialVentes = new ArrayList<>();
     }
 
-
-    // GETTERS && SETTERS
     public String getNom() {
         return nom;
     }
@@ -37,36 +44,16 @@ public class Magatzem {
         return llistaArticles;
     }
 
-    // METODS
-    public void addArticle(Article article) {
-        llistaArticles.add(article);
+    public ArrayList<Venta> getHistorialVentes() {
+        return historialVentes;
     }
-
-    public void removeArticle(Article article) {
-        llistaArticles.remove(article.getReferencia());
-    }
-
-    public void modArticle(int referencia, int quantitat) {
-        for (Article a : llistaArticles) {
-            if (a.getReferencia() == referencia) {
-                a.setQuantitat(quantitat);
-            }
-        }
-    }
-
-    public void wantArticle(int referencia) {
-        for (Article a : llistaArticles) {
-            if (a.getReferencia() == referencia) {
-                System.out.println(a.toString());
-            }
-        }
-    }
+    
 
     public Disc obtenirDisc(String interpret) {
         for (Article x : llistaArticles) {
             if (x.getTipusArticle() == DISC) {
                 Disc y = (Disc) x;
-                if (y.getInterpret() == interpret) {
+                if (y.getInterpret().equals(interpret)) {
                     return y;
                 }
             }
@@ -98,9 +85,43 @@ public class Magatzem {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + '}';
+    public Article obtenirArticle(int referencia) {
+        for (Article x : llistaArticles) {
+            if (x.getReferencia() == referencia) {
+                return x;
+            }
+        }
+        return null;
+    }
+    
+     public Article obtenirArticle(String titol) {
+        for (Article x : llistaArticles) {
+            if (x.getNom().equals(titol)) {
+                return x;
+            }
+        }
+        return null;
     }
 
+    public void addArticle(Article article) {
+        llistaArticles.add(article);
+    }
+
+    public void removeArticle(Article article) {
+       llistaArticles.remove(article);
+    }
+
+    public void disminuirQuantitat(Article y) {
+        for (Article x : llistaArticles) {
+            if (y.equals(x)) {
+                x.setQuantitat(x.getQuantitat() - 1);
+            }
+
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", llistaVentes=" + historialVentes + '}';
+    }
 }

@@ -6,7 +6,6 @@
 package com.canf.articles;
 
 import com.canf.excepcions.PeliculaException;
-import static com.canf.articles.tipusArticle.PELÍCULA;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
@@ -16,8 +15,7 @@ import java.util.ArrayList;
  * @author antonialoy
  */
 public class Pelicula extends Article {
-    private final tipusArticle tipus = PELÍCULA;
-    private String nomDirector;
+   private String nomDirector;
     private ArrayList<String> llistaActors;
     private String sinopsi;
 
@@ -56,7 +54,7 @@ public class Pelicula extends Article {
 
     @Override
     public String toString() {
-        return "Pelicula{" + super.toString() + "tipusArticle= "+ tipus +"nomDirector=" + nomDirector + ", llistaActors=" + llistaActors + ", sinopsi=" + sinopsi + '}';
+        return "Pelicula{" + super.toString() + ", nomDirector=" + nomDirector + ", llistaActors=" + llistaActors + ", sinopsi=" + sinopsi + '}';
     }
     
 }
