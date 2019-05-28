@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.canf.empresa;
 
 import com.canf.articles.Article;
@@ -99,7 +94,7 @@ public class Magatzem {
         return null;
     }
     
-    public Article obtenirArticle(String titol) {
+     public Article obtenirArticle(String titol) {
         for (Article x : llistaArticles) {
             if (x.getNom().equals(titol)) {
                 return x;
@@ -129,5 +124,4 @@ public class Magatzem {
     public String toString() {
         return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", llistaVentes=" + historialVentes + '}';
     }
-
 }
