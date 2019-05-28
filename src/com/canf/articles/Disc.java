@@ -6,7 +6,6 @@
 package com.canf.articles;
 
 import com.canf.excepcions.DiscException;
-import static com.canf.articles.tipusArticle.DISC;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
@@ -15,14 +14,14 @@ import java.util.ArrayList;
  *
  * @author antonialoy
  */
-public class Disc extends Article{
-    private final tipusArticle tipus = DISC;
-    private String interpret;
+public class Disc extends Article {
+
+  private String interpret;
     private ArrayList<String> llistaCansons;
     private String discografica;
 
-    public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException, DiscException {
-        super(nom, descripcio, preuUnitari, quantitat);
+    public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
+        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.setInterpret(interpret);
         this.setDiscografica(discografica);
         this.llistaCansons = new ArrayList<>();
@@ -53,7 +52,7 @@ public class Disc extends Article{
 
     @Override
     public String toString() {
-        return "Disc{" +super.toString()+ "tipus=" + tipus + ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
+        return "Disc{" +super.toString()+ ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
     }
-    
+
 }

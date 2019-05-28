@@ -7,11 +7,13 @@ public class Venta {
     private ArrayList<Article> productes;
     private int quantitat = 0;
     private LocalDate data;
+    private int totalVentes;
 
     public Venta(ArrayList<Article> productes) {
         this.productes = productes;
-        this.quantitat = quantitat++;
+        this.setQuantitat(quantitat);
         this.data = LocalDate.now();
+        this.totalVentes += totalVentes + quantitat;
         disminuirQuantitat(productes);
     }
     
@@ -34,6 +36,10 @@ public class Venta {
     public void setData(LocalDate data) {
         this.data = data;
     }
+
+    public int getTotalVentes() {
+        return totalVentes;
+    }    
     
     public void disminuirQuantitat(ArrayList<Article> productes) {
         for (Article producte : productes) {
@@ -43,7 +49,7 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta{" + "productes=" + productes + ", quantitat=" + quantitat + ", data=" + data + '}';
+        return "Venta{" + "productes=" + productes + ", quantitat=" + quantitat + ", data=" + data + ", totalVentes=" + totalVentes + '}';
     }
     
 }

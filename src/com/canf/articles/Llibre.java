@@ -6,7 +6,6 @@
 package com.canf.articles;
 
 import com.canf.excepcions.LlibreException;
-import static com.canf.articles.tipusArticle.LLIBRE;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 
@@ -15,14 +14,13 @@ import com.canf.utilitats.Validacions;
  * @author antonialoy
  */
 public class Llibre extends Article {
-    private final tipusArticle tipus = LLIBRE;
-    private String isbn;
+private String isbn;
     private String nomAutor;
     private String nomEditorial;
     private int numPagines;
 
-    public Llibre(String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
-        super(nom, descripcio, preuUnitari, quantitat);
+    public Llibre(String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
+        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.setIsbn(isbn);
         this.setNomAutor(nomAutor);
         this.setNomEditorial(nomEditorial);
@@ -72,8 +70,6 @@ public class Llibre extends Article {
 
     @Override
     public String toString() {
-        return "Llibre{" +super.toString()+ "tipus=" + tipus + ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
+        return "Llibre{" +super.toString()+ ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
     }
-    
-    
 }
