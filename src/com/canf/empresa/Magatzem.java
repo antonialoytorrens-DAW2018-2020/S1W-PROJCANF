@@ -98,6 +98,15 @@ public class Magatzem {
         }
         return null;
     }
+    
+    public Article obtenirArticle(String titol) {
+        for (Article x : llistaArticles) {
+            if (x.getNom().equals(titol)) {
+                return x;
+            }
+        }
+        return null;
+    }
 
     public void addArticle(Article article) {
         llistaArticles.add(article);
