@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.canf.articles;
 
 import com.canf.excepcions.DiscException;
-import static com.canf.articles.tipusArticle.DISC;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
-/**
- *
- * @author antonialoy
- */
-public class Disc extends Article{
-    private final tipusArticle tipus = DISC;
-    private String interpret;
+public class Disc extends Article {
+
+  private String interpret;
     private ArrayList<String> llistaCansons;
     private String discografica;
 
@@ -32,11 +22,16 @@ public class Disc extends Article{
         return interpret;
     }
 
-    public void setInterpret(String interpret) {
-        this.interpret = interpret;
+    public void setInterpret(String interpret) throws new DiscException {
+        if (Validacions.validaCadena(interpret)) {
+            this.interpret = interpret;
+        } else {
+            throw new DiscException("L'interpret no pot esser null ni estar buit.")
+        }
     }
 
     public ArrayList<String> getLlistaCansons() {
+        
         return llistaCansons;
     }
 
@@ -53,7 +48,7 @@ public class Disc extends Article{
 
     @Override
     public String toString() {
-        return "Disc{" +super.toString()+ "tipus=" + tipus + ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
+        return "Disc{" +super.toString()+ ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
     }
-    
+
 }
