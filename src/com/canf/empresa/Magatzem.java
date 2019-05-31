@@ -4,10 +4,12 @@ import com.canf.articles.Article;
 import com.canf.articles.Disc;
 import com.canf.articles.Llibre;
 import com.canf.articles.Pelicula;
+import com.canf.articles.Comanda;
 import com.canf.articles.Venta;
 import static com.canf.articles.tipusArticle.DISC;
 import static com.canf.articles.tipusArticle.LLIBRE;
 import static com.canf.articles.tipusArticle.PELÍCULA;
+import com.canf.excepcions.ComandaException;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +22,7 @@ public class Magatzem {
     private String nom;
     private ArrayList<Article> llistaArticles;
     private ArrayList<Venta> historialVentes;
+    private int totalVenta = 0;
 
     public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) {
         this.setNom(nom);
@@ -110,6 +113,16 @@ public class Magatzem {
     public void removeArticle(Article article) {
        llistaArticles.remove(article);
     }
+    
+    public void addVenta(Venta venta) {
+        historialVentes.add(venta);
+        this.totalVenta++;
+    }
+    
+    public void removeVenta(Venta venta) {
+        historialVentes.remove(venta);
+        this.totalVenta--;
+    }
 
     public void disminuirQuantitat(Article y) {
         for (Article x : llistaArticles) {
@@ -119,9 +132,15 @@ public class Magatzem {
 
         }
     }
+    
+    public void afegirStock(Comanda comanda) throws ComandaException {
+        comanda.canviStock(comanda.getProducte(), comanda.getQuantitat(), false);
+    }
 
     @Override
     public String toString() {
-        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", llistaVentes=" + historialVentes + '}';
+        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", historialVentes=" + historialVentes + ", totalVenta=" + totalVenta + '}';
     }
+
+    
 }

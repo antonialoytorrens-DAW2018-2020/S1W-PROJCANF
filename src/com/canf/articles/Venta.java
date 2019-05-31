@@ -1,55 +1,55 @@
 package com.canf.articles;
 
+import com.canf.excepcions.ComandaException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Venta {
-    private ArrayList<Article> productes;
-    private int quantitat = 0;
+
+    private int codi = 0;
+    private ArrayList<Comanda> comanda;
     private LocalDate data;
-    private int totalVentes;
+    private double totalPreu;
 
-    public Venta(ArrayList<Article> productes) {
-        this.productes = productes;
-        this.setQuantitat(quantitat);
+    public Venta(ArrayList<Comanda> comanda) {
+        this.codi = codi++;
+        this.comanda = new ArrayList<>();
         this.data = LocalDate.now();
-        this.totalVentes += totalVentes + quantitat;
-        disminuirQuantitat(productes);
-    }
-    
-    public ArrayList<Article> getProductes() {
-        return productes;
-    }
-    
-    public int getQuantitat() {
-        return quantitat;
     }
 
-    public void setQuantitat(int quantitat) {
-        this.quantitat = quantitat;
+    public int getCodi() {
+        return codi;
+    }
+
+    public ArrayList<Comanda> getComanda() {
+        return comanda;
+    }
+    
+    public void addComanda(Comanda e) throws ComandaException {
+        if (e.getQuantitat() < 0) {
+            throw new ComandaException("La venta no s'ha pogut realitzar.");
+        } else {
+        this.totalPreu += e.getPreu();
+        this.comanda.add(e);
+        }
+    }
+    
+    public void removeComanda(Comanda e) {
+        this.totalPreu -= e.getPreu();
+        this.comanda.remove(e);
     }
 
     public LocalDate getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public int getTotalVentes() {
-        return totalVentes;
-    }    
-    
-    public void disminuirQuantitat(ArrayList<Article> productes) {
-        for (Article producte : productes) {
-            producte.setQuantitat(producte.getQuantitat() - 1);
-        }
+    public double getTotalPreu() {
+        return totalPreu;
     }
 
     @Override
     public String toString() {
-        return "Venta{" + "productes=" + productes + ", quantitat=" + quantitat + ", data=" + data + ", totalVentes=" + totalVentes + '}';
+        return "Venta{" + "codi=" + codi + ", comanda=" + comanda + ", data=" + data + ", totalPreu=" + totalPreu + '}';
     }
     
 }
