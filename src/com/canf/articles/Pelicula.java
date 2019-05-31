@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.canf.articles;
 
 import com.canf.excepcions.PeliculaException;
@@ -10,10 +6,7 @@ import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
-/**
- *
- * @author antonialoy
- */
+
 public class Pelicula extends Article {
    private String nomDirector;
     private ArrayList<String> llistaActors;

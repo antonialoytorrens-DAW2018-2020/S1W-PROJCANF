@@ -8,12 +8,12 @@ import com.canf.articles.Venta;
 import static com.canf.articles.tipusArticle.DISC;
 import static com.canf.articles.tipusArticle.LLIBRE;
 import static com.canf.articles.tipusArticle.PELÍCULA;
+import com.canf.excepcions.ArticleException;
+import com.canf.excepcions.ValidacioException;
+import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
-/**
- *
- * @author antonialoy
- */
+
 public class Magatzem {
 
     private int codi;
@@ -21,7 +21,7 @@ public class Magatzem {
     private ArrayList<Article> llistaArticles;
     private ArrayList<Venta> historialVentes;
 
-    public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) {
+    public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) throws ValidacioException {
         this.setNom(nom);
         this.codi = codi;
         this.llistaArticles = new ArrayList<>();
@@ -32,8 +32,12 @@ public class Magatzem {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nom) throws ValidacioException {
+        if (Validacions.validaCadena(nom)) {
+            this.nom = nom;
+        } else {
+            throw new ValidacioException("El nom no pot esser null, ni estar en blanc.");
+        }
     }
 
     public int getCodi() {
@@ -111,7 +115,7 @@ public class Magatzem {
        llistaArticles.remove(article);
     }
 
-    public void disminuirQuantitat(Article y) {
+    public void disminuirQuantitat(Article y) throws ArticleException {
         for (Article x : llistaArticles) {
             if (y.equals(x)) {
                 x.setQuantitat(x.getQuantitat() - 1);
@@ -119,6 +123,8 @@ public class Magatzem {
 
         }
     }
+
+    
 
     @Override
     public String toString() {
