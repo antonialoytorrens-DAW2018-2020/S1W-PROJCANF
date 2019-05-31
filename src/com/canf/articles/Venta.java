@@ -1,5 +1,8 @@
 package com.canf.articles;
 
+import com.canf.excepcions.ArticleException;
+import com.canf.excepcions.ValidacioException;
+import com.canf.utilitats.Validacions;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -9,7 +12,7 @@ public class Venta {
     private LocalDate data;
     private int totalVentes;
 
-    public Venta(ArrayList<Article> productes) {
+    public Venta(ArrayList<Article> productes) throws ValidacioException, ArticleException {
         this.productes = productes;
         this.setQuantitat(quantitat);
         this.data = LocalDate.now();
@@ -25,8 +28,12 @@ public class Venta {
         return quantitat;
     }
 
-    public void setQuantitat(int quantitat) {
-        this.quantitat = quantitat;
+    public void setQuantitat(int quantitat) throws ValidacioException {
+        if (Validacions.validaInt(quantitat)) {
+            this.quantitat = quantitat;
+        } else {
+            throw new ValidacioException("La quantitat no pot esser inferior a 0.");
+        }
     }
 
     public LocalDate getData() {
@@ -41,7 +48,7 @@ public class Venta {
         return totalVentes;
     }    
     
-    public void disminuirQuantitat(ArrayList<Article> productes) {
+    public void disminuirQuantitat(ArrayList<Article> productes) throws ArticleException {
         for (Article producte : productes) {
             producte.setQuantitat(producte.getQuantitat() - 1);
         }
