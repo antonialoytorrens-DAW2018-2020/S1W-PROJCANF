@@ -54,16 +54,34 @@ public abstract class Article {
         return preuUnitari;
     }
 
+<<<<<<< HEAD
     public void setPreuUnitari(double preuUnitari) {
         this.preuUnitari = preuUnitari;
+=======
+    public void setPreuUnitari(double preuUnitari) throws ArticleException {
+        if(Validacions.validaDouble(preuUnitari)) {
+            this.preuUnitari = preuUnitari;
+        } else {
+            throw new ArticleException("El preu unitari no pot esser menor que 0.");
+        }
+>>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
     }
 
     public int getQuantitat() {
         return quantitat;
     }
 
+<<<<<<< HEAD
     public void setQuantitat(int quantitat) {
         this.quantitat = quantitat;
+=======
+    public void setQuantitat(int quantitat) throws ArticleException {
+        if(Validacions.validaInt(quantitat)) {
+            this.quantitat = quantitat;
+        } else {
+            throw new ArticleException("La quantitat no pot esser negativa, ni més petita que 0.");
+        }
+>>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
     }
 
     public tipusArticle getTipusArticle() {

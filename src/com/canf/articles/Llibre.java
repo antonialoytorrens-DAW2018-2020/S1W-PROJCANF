@@ -1,18 +1,26 @@
+<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+=======
+
+>>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 package com.canf.articles;
 
 import com.canf.excepcions.LlibreException;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 
+<<<<<<< HEAD
 /**
  *
  * @author antonialoy
  */
+=======
+
+>>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 public class Llibre extends Article {
 private String isbn;
     private String nomAutor;
@@ -64,8 +72,17 @@ private String isbn;
         return numPagines;
     }
 
+<<<<<<< HEAD
     public void setNumPagines(int numPagines) {
         this.numPagines = numPagines;
+=======
+    public void setNumPagines(int numPagines) throws LlibreException {
+        if (Validacions.validaInt(numPagines)) {
+            this.numPagines = numPagines;
+        } else {
+            throw new LlibreException("El número de pàgines no pot esser 0.");
+        }
+>>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
     }
 
     @Override
