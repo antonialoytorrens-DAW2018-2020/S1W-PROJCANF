@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-=======
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 package com.canf.articles;
 
 import com.canf.excepcions.DiscException;
@@ -13,13 +10,10 @@ import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 /**
  *
  * @author antonialoy
  */
-=======
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 public class Disc extends Article {
 
   private String interpret;
@@ -37,24 +31,11 @@ public class Disc extends Article {
         return interpret;
     }
 
-<<<<<<< HEAD
     public void setInterpret(String interpret) {
         this.interpret = interpret;
     }
 
     public ArrayList<String> getLlistaCansons() {
-=======
-    public void setInterpret(String interpret) throws DiscException {
-        if (Validacions.validaCadena(interpret)) {
-            this.interpret = interpret;
-        } else {
-            throw new DiscException("L'interpret no pot esser null ni estar buit.");
-        }
-    }
-
-    public ArrayList<String> getLlistaCansons() {
-        
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
         return llistaCansons;
     }
 

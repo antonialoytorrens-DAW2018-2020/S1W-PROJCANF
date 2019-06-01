@@ -4,15 +4,11 @@ import com.canf.articles.Article;
 import com.canf.articles.Disc;
 import com.canf.articles.Llibre;
 import com.canf.articles.Pelicula;
-<<<<<<< HEAD
 import com.canf.articles.Comanda;
-=======
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 import com.canf.articles.Venta;
 import static com.canf.articles.tipusArticle.DISC;
 import static com.canf.articles.tipusArticle.LLIBRE;
 import static com.canf.articles.tipusArticle.PELÍCULA;
-<<<<<<< HEAD
 import com.canf.excepcions.ComandaException;
 import java.util.ArrayList;
 
@@ -20,28 +16,15 @@ import java.util.ArrayList;
  *
  * @author antonialoy
  */
-=======
-import com.canf.excepcions.ArticleException;
-import com.canf.excepcions.ValidacioException;
-import com.canf.utilitats.Validacions;
-import java.util.ArrayList;
-
-
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 public class Magatzem {
 
     private int codi;
     private String nom;
     private ArrayList<Article> llistaArticles;
     private ArrayList<Venta> historialVentes;
-<<<<<<< HEAD
     private int totalVenta = 0;
 
     public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) {
-=======
-
-    public Magatzem(int codi, String nom, ArrayList<Article> llistaArticles, ArrayList<Venta> historialVentes) throws ValidacioException {
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
         this.setNom(nom);
         this.codi = codi;
         this.llistaArticles = new ArrayList<>();
@@ -52,17 +35,8 @@ public class Magatzem {
         return nom;
     }
 
-<<<<<<< HEAD
     public void setNom(String nom) {
         this.nom = nom;
-=======
-    public void setNom(String nom) throws ValidacioException {
-        if (Validacions.validaCadena(nom)) {
-            this.nom = nom;
-        } else {
-            throw new ValidacioException("El nom no pot esser null, ni estar en blanc.");
-        }
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
     }
 
     public int getCodi() {
@@ -139,7 +113,6 @@ public class Magatzem {
     public void removeArticle(Article article) {
        llistaArticles.remove(article);
     }
-<<<<<<< HEAD
     
     public void addVenta(Venta venta) {
         historialVentes.add(venta);
@@ -152,10 +125,6 @@ public class Magatzem {
     }
 
     public void disminuirQuantitat(Article y) {
-=======
-
-    public void disminuirQuantitat(Article y) throws ArticleException {
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
         for (Article x : llistaArticles) {
             if (y.equals(x)) {
                 x.setQuantitat(x.getQuantitat() - 1);
@@ -163,7 +132,6 @@ public class Magatzem {
 
         }
     }
-<<<<<<< HEAD
     
     public void afegirStock(Comanda comanda) throws ComandaException {
         comanda.canviStock(comanda.getProducte(), comanda.getQuantitat(), false);
@@ -175,13 +143,4 @@ public class Magatzem {
     }
 
     
-=======
-
-    
-
-    @Override
-    public String toString() {
-        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", llistaVentes=" + historialVentes + '}';
-    }
->>>>>>> 9c1ad16be3e4f42029240aa83cffac873307b106
 }
