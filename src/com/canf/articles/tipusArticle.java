@@ -10,5 +10,5 @@ package com.canf.articles;
  * @author antonialoy
  */
 public enum tipusArticle {
-    PELÍCULA, LLIBRE, DISC
+    PELICULA, LLIBRE, DISC
 }

@@ -11,11 +11,12 @@ public abstract class Article {
 
     private String nom;
     private String descripcio;
-    private double preuUnitari;
     private tipusArticle tipusArticle;
-    private int quantitat;   
+    private double preuUnitari;
+    private int quantitat;
 
-    public Article(String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException {
+    public Article(String nom, String descripcio, tipusArticle tipusArticle, 
+            double preuUnitari, int quantitat) throws ArticleException {
        referencia = numReferencia++;
         this.setNom(nom);
         this.setDescripcio(descripcio);
@@ -85,7 +86,7 @@ public abstract class Article {
 
     @Override
     public String toString() {
-        return "Article{" + "referencia=" + referencia + ", nom=" + nom + ", descripcio=" + descripcio + ", preuUnitari=" + preuUnitari + ", quantitat=" + quantitat + '}';
+        return "referencia=" + referencia + ", nom=" + nom + ", descripcio=" + descripcio + ", preuUnitari=" + preuUnitari + ", quantitat=" + quantitat;
     }
 
 }

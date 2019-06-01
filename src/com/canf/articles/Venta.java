@@ -6,14 +6,20 @@ import java.util.ArrayList;
 
 public class Venta {
 
-    private int codi = 0;
-    private ArrayList<Comanda> comanda;
+    private int codi;    
+    private static int numCodi = 0;
+    private ArrayList<Comanda> llistaComandes;
     private LocalDate data;
-    private double totalPreu;
 
     public Venta(ArrayList<Comanda> comanda) {
-        this.codi = codi++;
-        this.comanda = new ArrayList<>();
+        this.codi = numCodi++;
+        this.llistaComandes = comanda;
+        this.data = LocalDate.now();
+    }
+    
+    public Venta() {
+        this.codi = numCodi++;
+        this.llistaComandes = new ArrayList<>();
         this.data = LocalDate.now();
     }
 
@@ -21,22 +27,26 @@ public class Venta {
         return codi;
     }
 
-    public ArrayList<Comanda> getComanda() {
-        return comanda;
+    public ArrayList<Comanda> getLlistaComandes() {
+        return llistaComandes;
     }
     
     public void addComanda(Comanda e) throws ComandaException {
-        if (e.getQuantitat() < 0) {
+        if (e.getQuantitat() <= 0) {
             throw new ComandaException("La venta no s'ha pogut realitzar.");
         } else {
-        this.totalPreu += e.getPreu();
-        this.comanda.add(e);
+        this.llistaComandes.add(e);
+        }
+    }
+    
+    public void canviarStock() throws ComandaException {
+        for(Comanda e : llistaComandes) {
+            e.canviStock();
         }
     }
     
     public void removeComanda(Comanda e) {
-        this.totalPreu -= e.getPreu();
-        this.comanda.remove(e);
+        this.llistaComandes.remove(e);
     }
 
     public LocalDate getData() {
@@ -44,12 +54,39 @@ public class Venta {
     }
 
     public double getTotalPreu() {
-        return totalPreu;
+        double preu = 0;
+        for(Comanda comanda : this.llistaComandes) {
+            preu = preu + comanda.getQuantitat()*comanda.getPreu();
+        }
+        return preu;
+    }
+    
+    public int getNumeroItems() {
+        int numero = 0;
+        for(Comanda comanda : this.llistaComandes) {
+            numero = numero + comanda.getQuantitat();
+        }
+        return numero;
+    }
+    
+    public void imprimirVenta() {
+        System.out.println("\n");
+        System.out.println("-------------------------");
+        System.out.println("Venta: " + codi + "\t"+ data);
+        System.out.println("-------------------------");
+        for(Comanda comanda : this.llistaComandes) {
+            System.out.println("\t"+comanda.getNumeroComanda()+"\t"+
+                comanda.getProducte().getNom()+"\t"+comanda.getQuantitat()+"\t"
+                    +comanda.getPreu()+"\t"+comanda.getImportTotal());
+        }
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("\t\t\t\t\t\tTOTAL: \t\t" +getTotalPreu());
+        System.out.println("\t\t\t\t\t\tÍTEMS: \t\t" +getNumeroItems());
     }
 
     @Override
     public String toString() {
-        return "Venta{" + "codi=" + codi + ", comanda=" + comanda + ", data=" + data + ", totalPreu=" + totalPreu + '}';
+        return "Venta{" + "codi=" + codi + ", llistaComandes=" + llistaComandes + ", data=" + data +'}';
     }
     
 }

@@ -5,16 +5,23 @@ import com.canf.excepcions.ComandaException;
 public class Comanda {
 
     private Article producte;
+
+    private int numeroComanda;
+    private static int comanda = 0;
+
+    private int referenciaProducte;
     private int quantitat;
-    private boolean opcio;
     private double preu;
 
     public Comanda(Article producte, int quantitat) throws ComandaException {
+        this.numeroComanda = comanda++;
         this.producte = producte;
         this.quantitat = quantitat;
-        this.opcio = true;
-        canviStock(producte, quantitat, opcio);
-        this.setPreu();
+        this.preu = producte.getPreuUnitari();
+    }
+
+    public int getNumeroComanda() {
+        return numeroComanda;
     }
 
     public int getQuantitat() {
@@ -33,29 +40,25 @@ public class Comanda {
         return preu;
     }
 
-    public void setPreu() {
-        this.preu = producte.getPreuUnitari() * quantitat;
+    public void setPreu(double preu) {
+        this.preu = preu;
+    }
+    
+    public double getImportTotal() {
+        return producte.getPreuUnitari() * quantitat;
     }
 
-    public void canviStock(Article producte, int quantitat, boolean opcio) throws ComandaException {
-        if (opcio) {
-            if ((producte.getQuantitat() - quantitat) > 0 && quantitat < producte.getQuantitat()) {
-                producte.setQuantitat(producte.getQuantitat() - quantitat);
-            } else {
-                throw new ComandaException("La venta no s'ha pogut realitzar.");
-            }
+    public void canviStock() throws ComandaException {
+        if ((producte.getQuantitat() - quantitat) > 0 && quantitat < producte.getQuantitat()) {
+            producte.setQuantitat(producte.getQuantitat() - quantitat);
         } else {
-            if (quantitat < 0) {
-                throw new ComandaException("La compra no s'ha pogut realitzar.");
-            } else {
-                producte.setQuantitat(producte.getQuantitat() + quantitat);
-            }
+            throw new ComandaException("La venta no s'ha pogut realitzar.");
         }
     }
 
     @Override
     public String toString() {
-        return "Comanda{" + "producte=" + producte + ", quantitat=" + quantitat + ", opcio=" + opcio + ", preu=" + preu + '}';
+        return "Comanda{" + "producte=" + producte + ", quantitat=" + quantitat + ", preu=" + preu + '}';
     }
 
 }

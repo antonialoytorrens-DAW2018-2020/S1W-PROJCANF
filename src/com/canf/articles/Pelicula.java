@@ -15,14 +15,26 @@ import java.util.ArrayList;
  * @author antonialoy
  */
 public class Pelicula extends Article {
-   private String nomDirector;
+
+    private String nomDirector;
     private ArrayList<String> llistaActors;
     private String sinopsi;
 
-    public Pelicula(String nomDirector, ArrayList<String> llistaActors, String sinopsi, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
+    public Pelicula(String nomDirector, ArrayList<String> llistaActors, String sinopsi,
+            String nom, String descripcio, tipusArticle tipusArticle,
+            double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
         super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.nomDirector = nomDirector;
         this.llistaActors = llistaActors;
+        this.sinopsi = sinopsi;
+    }
+    
+        public Pelicula(String nomDirector, String sinopsi,
+            String nom, String descripcio, tipusArticle tipusArticle,
+            double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
+        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        this.nomDirector = nomDirector;
+        this.llistaActors = new ArrayList<>();
         this.sinopsi = sinopsi;
     }
 
@@ -30,8 +42,16 @@ public class Pelicula extends Article {
         return nomDirector;
     }
 
+    public void addActor(String e) {
+        this.llistaActors.add(e);
+    }
+
+    public void removeActor(String e) {
+        this.llistaActors.remove(e);
+    }
+
     public void setNomDirector(String nomDirector) throws PeliculaException {
-        if(!Validacions.validaCadena(nomDirector)) {
+        if (!Validacions.validaCadena(nomDirector)) {
             throw new PeliculaException("El nom del director/a no pot ser null ni pot estar buit");
         }
         this.nomDirector = nomDirector;
@@ -46,7 +66,7 @@ public class Pelicula extends Article {
     }
 
     public void setSinopsi(String sinopsi) throws PeliculaException {
-        if(!Validacions.validaCadena(sinopsi)) {
+        if (!Validacions.validaCadena(sinopsi)) {
             throw new PeliculaException("La sinopsi no pot ser null ni pot estar buida");
         }
         this.sinopsi = sinopsi;
@@ -56,5 +76,5 @@ public class Pelicula extends Article {
     public String toString() {
         return "Pelicula{" + super.toString() + ", nomDirector=" + nomDirector + ", llistaActors=" + llistaActors + ", sinopsi=" + sinopsi + '}';
     }
-    
+
 }

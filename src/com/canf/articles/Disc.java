@@ -16,16 +16,23 @@ import java.util.ArrayList;
  */
 public class Disc extends Article {
 
-  private String interpret;
+    private String interpret;
     private ArrayList<String> llistaCansons;
     private String discografica;
 
-    public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
+    public Disc(String interpret, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
         super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.setInterpret(interpret);
         this.setDiscografica(discografica);
         this.llistaCansons = new ArrayList<>();
-    }   
+    }
+    
+        public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
+        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        this.setInterpret(interpret);
+        this.setDiscografica(discografica);
+        this.llistaCansons = llistaCansons;
+    }
 
     public String getInterpret() {
         return interpret;
@@ -39,12 +46,20 @@ public class Disc extends Article {
         return llistaCansons;
     }
 
+    public void addCanso(String e) {
+        this.llistaCansons.add(e);
+    }
+
+    public void removeCanso(String e) {
+        this.llistaCansons.remove(e);
+    }
+
     public String getDiscografica() {
         return discografica;
     }
 
     public void setDiscografica(String discografica) throws DiscException {
-        if(!Validacions.validaCadena(discografica)){
+        if (!Validacions.validaCadena(discografica)) {
             throw new DiscException("El nom de la discogràfica no pot ser null ni pot estar buit");
         }
         this.discografica = discografica;
@@ -52,7 +67,7 @@ public class Disc extends Article {
 
     @Override
     public String toString() {
-        return "Disc{" +super.toString()+ ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
+        return "Disc{" + super.toString() + ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';
     }
 
 }
