@@ -19,8 +19,8 @@ private String isbn;
     private String nomEditorial;
     private int numPagines;
 
-    public Llibre(String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
-        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+    public Llibre(int referencia, String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.setIsbn(isbn);
         this.setNomAutor(nomAutor);
         this.setNomEditorial(nomEditorial);

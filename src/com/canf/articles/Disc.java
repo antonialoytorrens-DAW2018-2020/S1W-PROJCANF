@@ -20,15 +20,15 @@ public class Disc extends Article {
     private ArrayList<String> llistaCansons;
     private String discografica;
 
-    public Disc(String interpret, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
-        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+    public Disc(int referencia, String interpret, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, DiscException {
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, stock);
         this.setInterpret(interpret);
         this.setDiscografica(discografica);
         this.llistaCansons = new ArrayList<>();
     }
     
-        public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, DiscException {
-        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        public Disc(int referencia, String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, DiscException {
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, stock);
         this.setInterpret(interpret);
         this.setDiscografica(discografica);
         this.llistaCansons = llistaCansons;

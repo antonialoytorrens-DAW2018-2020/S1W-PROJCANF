@@ -39,12 +39,6 @@ public class Venta {
         }
     }
     
-    public void canviarStock() throws ComandaException {
-        for(Comanda e : llistaComandes) {
-            e.canviStock();
-        }
-    }
-    
     public void removeComanda(Comanda e) {
         this.llistaComandes.remove(e);
     }
@@ -69,14 +63,22 @@ public class Venta {
         return numero;
     }
     
-    public void imprimirVenta() {
+    public ArrayList<Article> getLlistaArticles() {
+        ArrayList<Article> llistaArticles = new ArrayList<>();
+        for(Comanda comanda : this.llistaComandes) {
+            llistaArticles.add(comanda.getArticle());
+        }
+        return llistaArticles;
+    }
+    
+    public void imprimirTicket() {
         System.out.println("\n");
         System.out.println("-------------------------");
         System.out.println("Venta: " + codi + "\t"+ data);
         System.out.println("-------------------------");
         for(Comanda comanda : this.llistaComandes) {
             System.out.println("\t"+comanda.getNumeroComanda()+"\t"+
-                comanda.getProducte().getNom()+"\t"+comanda.getQuantitat()+"\t"
+                comanda.getArticle().getNom()+"\t"+comanda.getQuantitat()+"\t"
                     +comanda.getPreu()+"\t"+comanda.getImportTotal());
         }
         System.out.println("---------------------------------------------------------------------");

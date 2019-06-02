@@ -20,19 +20,19 @@ public class Pelicula extends Article {
     private ArrayList<String> llistaActors;
     private String sinopsi;
 
-    public Pelicula(String nomDirector, ArrayList<String> llistaActors, String sinopsi,
+    public Pelicula(int referencia, String nomDirector, ArrayList<String> llistaActors, String sinopsi,
             String nom, String descripcio, tipusArticle tipusArticle,
             double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
-        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.nomDirector = nomDirector;
         this.llistaActors = llistaActors;
         this.sinopsi = sinopsi;
     }
     
-        public Pelicula(String nomDirector, String sinopsi,
+        public Pelicula(int referencia, String nomDirector, String sinopsi,
             String nom, String descripcio, tipusArticle tipusArticle,
             double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
-        super(nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);
         this.nomDirector = nomDirector;
         this.llistaActors = new ArrayList<>();
         this.sinopsi = sinopsi;

@@ -14,15 +14,14 @@ public class Magatzem {
     private int codi;
     private String nom;
     private ArrayList<Article> llistaArticles;
-    private ArrayList<Venta> ventes;
+    private ArrayList<Venta> cistelles;
     private ArrayList<Venta> historialVentes;
-    private int totalVenta = 0;
 
     public Magatzem(int codi, String nom) {
         this.setNom(nom);
         this.codi = codi;
         this.llistaArticles = new ArrayList<>();
-        this.ventes = new ArrayList<>();
+        this.cistelles = new ArrayList<>();
         this.historialVentes = new ArrayList<>();
     }
 
@@ -38,20 +37,23 @@ public class Magatzem {
         return codi;
     }
 
-    public void addArticle(Article e) {
-        this.llistaArticles.add(e);
-    }
-
     public void removeArticle(Article e) {
         this.llistaArticles.remove(e);
     }
 
-    public void addVentaAHistorial(Venta e) {
+    private void addVentaAHistorial(Venta e) throws ComandaException {
         this.historialVentes.add(e);
+        for (Comanda comanda : e.getLlistaComandes()) {
+            actualitzarStock(comanda.getArticle(), comanda.getQuantitat());
+        }
+
     }
 
-    public void removeVentaAHistorial(Venta e) {
+    private void removeVentaAHistorial(Venta e) {
         this.historialVentes.remove(e);
+        for (Comanda comanda : e.getLlistaComandes()) {
+            actualitzarStock(comanda.getArticle(), -comanda.getQuantitat());
+        }
     }
 
     public ArrayList<Article> getLlistaArticles() {
@@ -62,72 +64,65 @@ public class Magatzem {
         return historialVentes;
     }
 
-    public void addVenta(Venta e) {
-        this.ventes.add(e);
+    private void addVenta(Venta e) {
+        this.cistelles.add(e);
     }
-    
-    public void removeVenta(Venta e) {
-        this.ventes.remove(e);
+
+    private void removeVenta(Venta e) {
+        this.cistelles.remove(e);
     }
-    
-    public void efectuarVenta(Venta e) throws ComandaException {
-        e.canviarStock();
+
+    public void efectuarVenta(Venta e) throws ComandaException, OutOfStockException {
+        comprovarStock(e);
         removeVenta(e);
         addVentaAHistorial(e);
     }
 
-    public Pelicula addPelicula(String nomDirector, ArrayList<String> llistaActors,
-            String sinopsi, String nom, String descripcio, tipusArticle tipusArticle,
+    public void cancelarVenta(Venta e) {
+        removeVentaAHistorial(e);
+    }
+
+    public Pelicula addPelicula(int referencia, String nomDirector, ArrayList<String> llistaActors,
+            String sinopsi, String nom, String descripcio,
             double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
-        Pelicula e = new Pelicula(nomDirector, llistaActors, sinopsi, nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        Pelicula e = new Pelicula(referencia, nomDirector, llistaActors, sinopsi, nom, descripcio, PELICULA, preuUnitari, quantitat);
         this.llistaArticles.add(e);
         return e;
     }
 
-    public Pelicula addPelicula(String nomDirector, String sinopsi, String nom,
-            String descripcio, tipusArticle tipusArticle, double preuUnitari,
+    public Pelicula addPelicula(int referencia, String nomDirector, String sinopsi, String nom,
+            String descripcio, double preuUnitari,
             int quantitat) throws ArticleException, PeliculaException {
-        Pelicula e = new Pelicula(nomDirector, sinopsi, nom, descripcio, tipusArticle, preuUnitari, quantitat);
+        Pelicula e = new Pelicula(referencia, nomDirector, sinopsi, nom, descripcio, PELICULA, preuUnitari, quantitat);
         this.llistaArticles.add(e);
         return e;
     }
 
-    public int getNumeroComanda(Comanda x) {
-        return x.getNumeroComanda();
+    public Disc addDisc(Disc x) {
+        this.llistaArticles.add(x);
+        return x;
     }
 
-    public Comanda obtenirComanda(int numero) {
-        for (Venta x : ventes) {
-            for (Comanda y : x.getLlistaComandes()) {
-                if (y.getNumeroComanda() == numero) {
-                    return y;
-                }
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Disc> obtenirDiscos(String interpret) {
+    public ArrayList<Disc> cercaDiscos(String interpret) {
         ArrayList<Disc> discs = new ArrayList<>();
         for (Article x : llistaArticles) {
             if (x.getTipusArticle() == DISC) {
                 Disc y = (Disc) x;
                 if (y.getInterpret().toLowerCase().contains(interpret.toLowerCase())) {
                     discs.add(y);
-                    break;
                 }
             }
         }
         return discs;
     }
 
-    public ArrayList<Pelicula> cercaPelicules(String x) {
+    public ArrayList<Pelicula> cercaPelicules(String actor) {
         ArrayList<Pelicula> pelicules = new ArrayList<>();
         for (Article w : llistaArticles) {
             if (w.getTipusArticle() == PELICULA) {
                 Pelicula y = (Pelicula) w;
                 for (String z : y.getLlistaActors()) {
-                    if (z.toLowerCase().contains(x.toLowerCase())) {
+                    if (z.toLowerCase().contains(actor.toLowerCase())) {
                         pelicules.add(y);
                         break;
                     }
@@ -145,7 +140,6 @@ public class Magatzem {
                 Llibre y = (Llibre) x;
                 if (y.getNomAutor().toLowerCase().contains(autor.toLowerCase())) {
                     llibres.add(y);
-                    break;
                 }
             }
         }
@@ -155,6 +149,15 @@ public class Magatzem {
     public Article obtenirArticle(int referencia) {
         for (Article x : llistaArticles) {
             if (x.getReferencia() == referencia) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+    public Article obtenirArticle(String nom) {
+        for (Article x : llistaArticles) {
+            if (x.getNom().toLowerCase().equals(nom)) {
                 return x;
             }
         }
@@ -174,42 +177,61 @@ public class Magatzem {
         return null;
     }
 
-    public Article obtenirArticle(String titol) {
+    public Llibre obtenirLlibre(int referencia) {
         for (Article x : llistaArticles) {
-            if (x.getNom().toLowerCase().equals(titol)) {
-                return x;
+            if (x.getTipusArticle() == LLIBRE) {
+                Llibre y = (Llibre) x;
+                if (y.getReferencia() == referencia) {
+                    return y;
+                }
             }
+
         }
         return null;
     }
 
-    public void addHistorialVenta(Venta venta) {
-        historialVentes.add(venta);
-        this.totalVenta++;
+    public Disc obtenirDisc(int referencia) {
+        for (Article x : llistaArticles) {
+            if (x.getTipusArticle() == DISC) {
+                Disc y = (Disc) x;
+                if (y.getReferencia() == referencia) {
+                    return y;
+                }
+            }
+
+        }
+        return null;
     }
 
-    public void removeHistorialVenta(Venta venta) {
-        historialVentes.remove(venta);
-        this.totalVenta--;
+    public int getNumVentesRealitzades() {
+        return this.historialVentes.size();
     }
 
-    public void disminuirQuantitat(Article y) {
+    public void actualitzarStock(Article y, int quantitat) {
         for (Article x : llistaArticles) {
             if (y.equals(x)) {
-                x.setQuantitat(x.getQuantitat() - 1);
+                x.setStock(x.getStock() - quantitat);
             }
 
         }
     }
 
+    private void comprovarStock(Venta e) throws OutOfStockException {
+        for (Comanda comanda : e.getLlistaComandes()) {
+            if (comanda.getArticle().getStock() < comanda.getQuantitat()) {
+                throw new OutOfStockException("No hi ha prou stock de " + comanda.getArticle().getNom());
+            }
+        }
+    }
+
     public void imprimirLlistaPelicules(boolean actors) {
-        System.out.println("-----------------------");    
+        System.out.println("-----------------------");
         System.out.println("Llista de pel·lícules: ");
         System.out.println("-----------------------");
         for (Article x : llistaArticles) {
             if (x.getTipusArticle() == PELICULA) {
                 Pelicula y = (Pelicula) x;
-                System.out.println(x.getReferencia() + "\tStock: " + x.getQuantitat());
+                System.out.println(x.getReferencia() + "\tStock: " + x.getStock());
                 System.out.println(x.getNom());
                 if (actors) {
                     for (String actor : y.getLlistaActors()) {
@@ -226,7 +248,7 @@ public class Magatzem {
         System.out.println("Llista de pel·lícules: ");
         System.out.println("-----------------------");
         for (Pelicula x : llista) {
-            System.out.println(x.getReferencia() + "\tStock: " + x.getQuantitat());
+            System.out.println(x.getReferencia() + "\tStock: " + x.getStock());
             System.out.println(x.getNom());
             for (String actor : x.getLlistaActors()) {
                 System.out.println("\t" + actor);
@@ -235,27 +257,63 @@ public class Magatzem {
         System.out.println("-----------------------");
     }
     
+        public void imprimirLlistaDiscos(ArrayList<Disc> llista) {
+        System.out.println("-----------------------");
+        System.out.println("Llista de discos: ");
+        System.out.println("-----------------------");
+        for (Disc x : llista) {
+            System.out.println(x.getReferencia() + "\tStock: " + x.getStock());
+            System.out.println(x.getNom());
+            for (String canso : x.getLlistaCansons()) {
+                System.out.println("\t" + canso);
+            }
+        }
+        System.out.println("-----------------------");
+    }
+        public void imprimirLlistaDiscos(boolean cansons) {
+        System.out.println("-----------------------");
+        System.out.println("Llista de pel·lícules: ");
+        System.out.println("-----------------------");
+        for (Article x : llistaArticles) {
+            if (x.getTipusArticle() == DISC) {
+                Disc y = (Disc) x;
+                System.out.println(x.getReferencia() + "\tStock: " + x.getStock());
+                System.out.println(x.getNom());
+                if (cansons) {
+                    for (String canso : y.getLlistaCansons()) {
+                        System.out.println("\t" + canso);
+                    }
+                }
+            }
+        }
+        System.out.println("-----------------------");
+    }
+
     public void imprimirHistorialVentes(ArrayList<Venta> llistaHistorial) {
         System.out.println("-----------------------");
         System.out.println("Historial de ventes: ");
         System.out.println("-----------------------");
-        for(Venta x : llistaHistorial) {
-            System.out.println("Codi: "+x.getCodi()+"\t\tData: "+x.getData()+"\tPreu: "+x.getTotalPreu());
+        for (Venta x : llistaHistorial) {
+            System.out.println("Codi: " + x.getCodi() + "\t\tData: " + x.getData() + "\tPreu: " + x.getTotalPreu());
         }
     }
-    
-        public void imprimirHistorialVentes() {
+
+    public void imprimirHistorialVentes() {
         System.out.println("-----------------------");
         System.out.println("Historial de ventes: ");
         System.out.println("-----------------------");
-        for(Venta x : this.historialVentes) {
-            System.out.println("Codi: "+x.getCodi()+"\t\tData: "+x.getData()+"\tPreu: "+x.getTotalPreu());
+        for (Venta x : this.historialVentes) {
+            System.out.println("Codi: " + x.getCodi() + "\t\tData: " + x.getData() + "\tPreu: " + x.getTotalPreu());
         }
+    }
+    
+    public void imprimirArticle(String nom) {
+        System.out.println(obtenirArticle(nom));
     }
 
     @Override
     public String toString() {
-        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", historialVentes=" + historialVentes + ", totalVenta=" + totalVenta + '}';
+        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", historialVentes=" + historialVentes + '}';
     }
 
 }

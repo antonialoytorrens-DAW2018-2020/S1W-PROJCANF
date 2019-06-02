@@ -4,20 +4,18 @@ import com.canf.excepcions.ComandaException;
 
 public class Comanda {
 
-    private Article producte;
+    private Article article;
 
     private int numeroComanda;
     private static int comanda = 0;
-
-    private int referenciaProducte;
     private int quantitat;
     private double preu;
 
-    public Comanda(Article producte, int quantitat) throws ComandaException {
+    public Comanda(Article article, int quantitat) throws ComandaException {
         this.numeroComanda = comanda++;
-        this.producte = producte;
+        this.article = article;
         this.quantitat = quantitat;
-        this.preu = producte.getPreuUnitari();
+        this.preu = article.getPreuUnitari();
     }
 
     public int getNumeroComanda() {
@@ -32,8 +30,8 @@ public class Comanda {
         this.quantitat = quantitat;
     }
 
-    public Article getProducte() {
-        return producte;
+    public Article getArticle() {
+        return article;
     }
 
     public double getPreu() {
@@ -45,20 +43,12 @@ public class Comanda {
     }
     
     public double getImportTotal() {
-        return producte.getPreuUnitari() * quantitat;
-    }
-
-    public void canviStock() throws ComandaException {
-        if ((producte.getQuantitat() - quantitat) > 0 && quantitat < producte.getQuantitat()) {
-            producte.setQuantitat(producte.getQuantitat() - quantitat);
-        } else {
-            throw new ComandaException("La venta no s'ha pogut realitzar.");
-        }
+        return article.getPreuUnitari() * quantitat;
     }
 
     @Override
     public String toString() {
-        return "Comanda{" + "producte=" + producte + ", quantitat=" + quantitat + ", preu=" + preu + '}';
+        return "Comanda{" + "article=" + article + ", quantitat=" + quantitat + ", preu=" + preu + '}';
     }
 
 }

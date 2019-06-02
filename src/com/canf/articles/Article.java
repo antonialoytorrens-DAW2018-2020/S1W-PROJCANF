@@ -7,22 +7,21 @@ import java.util.ArrayList;
 public abstract class Article {
 
     private int referencia;
-    private static int numReferencia = 0;
 
     private String nom;
     private String descripcio;
     private tipusArticle tipusArticle;
     private double preuUnitari;
-    private int quantitat;
+    private int stock;
 
-    public Article(String nom, String descripcio, tipusArticle tipusArticle, 
+    public Article(int referencia, String nom, String descripcio, tipusArticle tipusArticle, 
             double preuUnitari, int quantitat) throws ArticleException {
-       referencia = numReferencia++;
+        this.referencia = referencia;
         this.setNom(nom);
         this.setDescripcio(descripcio);
         this.setPreuUnitari(preuUnitari);
         this.tipusArticle = tipusArticle;
-        this.setQuantitat(quantitat);
+        this.setStock(quantitat);
     }
 
     public int getReferencia() {
@@ -59,12 +58,12 @@ public abstract class Article {
         this.preuUnitari = preuUnitari;
     }
 
-    public int getQuantitat() {
-        return quantitat;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantitat(int quantitat) {
-        this.quantitat = quantitat;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public tipusArticle getTipusArticle() {
@@ -86,7 +85,7 @@ public abstract class Article {
 
     @Override
     public String toString() {
-        return "referencia=" + referencia + ", nom=" + nom + ", descripcio=" + descripcio + ", preuUnitari=" + preuUnitari + ", quantitat=" + quantitat;
+        return "referencia=" + referencia + ", nom=" + nom + ", descripcio=" + descripcio + ", preuUnitari=" + preuUnitari + ", quantitat=" + stock;
     }
 
 }
