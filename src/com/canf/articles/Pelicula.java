@@ -28,8 +28,8 @@ public class Pelicula extends Article {
         this.llistaActors = llistaActors;
         this.sinopsi = sinopsi;
     }
-    
-        public Pelicula(int referencia, String nomDirector, String sinopsi,
+
+    public Pelicula(int referencia, String nomDirector, String sinopsi,
             String nom, String descripcio, tipusArticle tipusArticle,
             double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
         super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);

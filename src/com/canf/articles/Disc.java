@@ -33,12 +33,15 @@ public class Disc extends Article {
         this.setDiscografica(discografica);
         this.llistaCansons = llistaCansons;
     }
-
+        
     public String getInterpret() {
         return interpret;
     }
 
-    public void setInterpret(String interpret) {
+    public void setInterpret(String interpret) throws DiscException {
+        if (!Validacions.validaCadena(interpret)) {
+            throw new DiscException("El nom de l'intèrpret no pot ser null ni pot estar buit");
+        }
         this.interpret = interpret;
     }
 

@@ -1,5 +1,6 @@
 package com.canf.articles;
 
+import com.canf.excepcions.NullArticleException;
 import com.canf.excepcions.ComandaException;
 
 public class Comanda {
@@ -11,10 +12,10 @@ public class Comanda {
     private int quantitat;
     private double preu;
 
-    public Comanda(Article article, int quantitat) throws ComandaException {
+    public Comanda(Article article, int quantitat) throws ComandaException, NullArticleException {
         this.numeroComanda = comanda++;
-        this.article = article;
-        this.quantitat = quantitat;
+        validarArticle(article);
+        this.setQuantitat(quantitat);
         this.preu = article.getPreuUnitari();
     }
 
@@ -26,20 +27,26 @@ public class Comanda {
         return quantitat;
     }
 
-    public void setQuantitat(int quantitat) {
+    public void setQuantitat(int quantitat) throws ComandaException {
+        if(quantitat<=0) {
+            throw new ComandaException("La quantitat que es vol demanar a la comanda no pot ser zero o negativa");
+        }
         this.quantitat = quantitat;
     }
-
+    
+    public void validarArticle(Article article) throws NullArticleException {
+        if(article==null) {
+            throw new NullArticleException("L'article que es vol comanar no existeix");
+        }
+        this.article = article;
+    }
+    
     public Article getArticle() {
         return article;
     }
 
     public double getPreu() {
         return preu;
-    }
-
-    public void setPreu(double preu) {
-        this.preu = preu;
     }
     
     public double getImportTotal() {

@@ -14,28 +14,33 @@ import com.canf.utilitats.Validacions;
  * @author antonialoy
  */
 public class Llibre extends Article {
-private String isbn;
+
+    private String isbn;
     private String nomAutor;
     private String nomEditorial;
     private int numPagines;
 
-    public Llibre(int referencia, String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int quantitat) throws ArticleException, LlibreException {
-        super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);
-        this.setIsbn(isbn);
+    public Llibre(int referencia, String isbn, String nomAutor, String nomEditorial, int numPagines, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, LlibreException {
+        super(referencia, nom, descripcio, tipusArticle, preuUnitari, stock);
+        validaIsbn(isbn);
         this.setNomAutor(nomAutor);
         this.setNomEditorial(nomEditorial);
         this.setNumPagines(numPagines);
-    }   
+    }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) throws LlibreException {
-         if(!Validacions.validaCadena(isbn)){
-            throw new LlibreException("L'ISBN del llibre no pot ser null ni pot estar buit");
+    //L'ISBN té 13 xifres
+    public String validaIsbn(String isbn) throws LlibreException {
+        /*if(isbn.length()!=13) {
+            throw new LlibreException("L'ISBN ha de tenir 13 xifres");
+        }*/
+        if(!Validacions.validaCadena(isbn)) {
+            throw new LlibreException("L'ISBN no pot ser null ni pot estar buit");
         }
-        this.isbn = isbn;
+        return this.isbn;
     }
 
     public String getNomAutor() {
@@ -43,7 +48,7 @@ private String isbn;
     }
 
     public void setNomAutor(String nomAutor) throws LlibreException {
-        if(!Validacions.validaCadena(nomAutor)){
+        if (!Validacions.validaCadena(nomAutor)) {
             throw new LlibreException("El nom de l'autor no pot ser null ni pot estar buit");
         }
         this.nomAutor = nomAutor;
@@ -54,8 +59,8 @@ private String isbn;
     }
 
     public void setNomEditorial(String nomEditorial) throws LlibreException {
-        if(!Validacions.validaCadena(nomEditorial)){
-           throw new LlibreException("El nom de l'editorial no pot ser null ni pot estar buit");
+        if (!Validacions.validaCadena(nomEditorial)) {
+            throw new LlibreException("El nom de l'editorial no pot ser null ni pot estar buit");
         }
         this.nomEditorial = nomEditorial;
     }
@@ -64,12 +69,14 @@ private String isbn;
         return numPagines;
     }
 
-    public void setNumPagines(int numPagines) {
-        this.numPagines = numPagines;
+    public void setNumPagines(int numPagines) throws LlibreException {
+        if (numPagines <= 0) {
+            throw new LlibreException("El número de pàgines no pot ser zero o negatiu");
+        }
     }
 
     @Override
     public String toString() {
-        return "Llibre{" +super.toString()+ ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
+        return "Llibre{" + super.toString() + ", isbn=" + isbn + ", nomAutor=" + nomAutor + ", nomEditorial=" + nomEditorial + ", numPagines=" + numPagines + '}';
     }
 }

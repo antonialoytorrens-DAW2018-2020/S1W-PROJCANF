@@ -14,14 +14,29 @@ public abstract class Article {
     private double preuUnitari;
     private int stock;
 
-    public Article(int referencia, String nom, String descripcio, tipusArticle tipusArticle, 
+    public Article(int referencia, String nom, String descripcio, tipusArticle tipusArticle,
             double preuUnitari, int quantitat) throws ArticleException {
-        this.referencia = referencia;
+        validaReferencia(referencia);
         this.setNom(nom);
         this.setDescripcio(descripcio);
         this.setPreuUnitari(preuUnitari);
-        this.tipusArticle = tipusArticle;
+        validaTipusArticle(tipusArticle);
         this.setStock(quantitat);
+    }
+
+    public int validaReferencia(int referencia) throws ArticleException {
+        if (referencia < 0) {
+            throw new ArticleException("El codi no pot ser negatiu");
+        } else {
+            return this.referencia = referencia;
+        }
+    }
+
+    public tipusArticle validaTipusArticle(tipusArticle tipusArticle) throws ArticleException {
+        if (tipusArticle == null) {
+            throw new ArticleException("El tipus d'article no pot ser null");
+        }
+        return this.tipusArticle = tipusArticle;
     }
 
     public int getReferencia() {
@@ -54,7 +69,10 @@ public abstract class Article {
         return preuUnitari;
     }
 
-    public void setPreuUnitari(double preuUnitari) {
+    public void setPreuUnitari(double preuUnitari) throws ArticleException {
+        if (preuUnitari <= 0) {
+            throw new ArticleException("El preu per unitat no pot ser zero o negatiu");
+        }
         this.preuUnitari = preuUnitari;
     }
 
@@ -62,16 +80,15 @@ public abstract class Article {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(int stock) throws ArticleException {
+        if(stock<0) {
+            throw new ArticleException("L'stock no pot ser negatiu");
+        }
         this.stock = stock;
     }
 
     public tipusArticle getTipusArticle() {
         return tipusArticle;
-    }
-
-    public void setTipusArticle(tipusArticle tipusArticle) {
-        this.tipusArticle = tipusArticle;
     }
 
     public void mostraXML(ArrayList<Article> x) {
