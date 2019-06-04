@@ -15,6 +15,7 @@ import com.canf.excepcions.NullArticleException;
 import com.canf.excepcions.ComandaException;
 import com.canf.excepcions.DiscException;
 import com.canf.excepcions.LlibreException;
+import com.canf.excepcions.MagatzemException;
 import com.canf.excepcions.OutOfStockException;
 import com.canf.excepcions.PeliculaException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 
 public class provesCanf {
 
-    public void inicialitza() throws ArticleException, PeliculaException, ComandaException, DiscException, NullArticleException {
+    public void inicialitza() throws ArticleException, PeliculaException, ComandaException, DiscException, NullArticleException, MagatzemException {
         //Afegim Magatzem       
         Magatzem canf1 = new Magatzem(1, "Canf");
         Pelicula p;
@@ -76,27 +77,30 @@ public class provesCanf {
         canf1.imprimirLlistaLlibres(cercaLlibres);
 
         //Afegim Pel·lícules
-        p = canf1.addPelicula(0, "Mark Neveldine, Brian Taylor", "Professional assassin Chev Chelios "
+        p = new Pelicula(0, "Mark Neveldine, Brian Taylor", "Professional assassin Chev Chelios "
                 + "learns his rival has injected him with a poison that will "
                 + "kill him if his heart rate drops.",
-                "Crank: Veneno en la sangre", "Película d'acció", 17, 15);
+                "Crank: Veneno en la sangre", "Película d'acció", PELICULA, 17, 15);
+        canf1.addPelicula(p);
         p.addActor("Jason Statham");
         p.addActor("Amy Smart");
         canf1.obtenirPelicula(0).addActor("Carlos Sanz");
         canf1.obtenirPelicula(0).addActor("Jose Cantillo");
 
-        p = canf1.addPelicula(1, "Chad Stahelski, David Leitch", "An ex-hit-man comes "
+        p = new Pelicula(1, "Chad Stahelski, David Leitch", "An ex-hit-man comes "
                 + "out of retirement to track down the gangsters that killed his"
-                + " dog and took everything from him.", "John Wick (Otro día para matar)", "Película d'acció", 12, 10);
+                + " dog and took everything from him.", "John Wick (Otro día para matar)", "Película d'acció", PELICULA, 12, 10);
+        canf1.addPelicula(p);
         p.addActor("Keanu Reeves");
         p.addActor("Michael Nyqvist");
         p.addActor("Alfie Allen");
         p.addActor("Willem Dafoe");
 
-        p = canf1.addPelicula(2, "Chad Stahelski", "After returning to the criminal "
+        p = new Pelicula(2, "Chad Stahelski", "After returning to the criminal "
                 + "underworld to repay a debt, John Wick discovers that a "
                 + "large bounty has been put on his life.",
-                "John Wick: Pacto de sangre", "Película d'acció", 25, 20);
+                "John Wick: Pacto de sangre", "Película d'acció", PELICULA, 25, 20);
+        canf1.addPelicula(p);
         p.addActor("Keanu Reeves");
         p.addActor("Ruby Rose");
 
@@ -158,7 +162,6 @@ public class provesCanf {
             canf1.efectuarVenta(venta4);
             canf1.imprimirLlistaDiscos(false);
             canf1.imprimirLlistaPelicules(false);
-            canf1.imprimirHistorialVentes();
         } catch (OutOfStockException ex) {
             System.out.println(ex.getMessage());
         }
@@ -183,13 +186,31 @@ public class provesCanf {
             canf1.efectuarVenta(venta5);
         } catch (OutOfStockException ex) {
             System.out.println(ex.getMessage());
-        }
+        }       
+        canf1.imprimirHistorialVentes();
         canf1.imprimirTot(false, false, false);
+        canf1.actualitzarSumaStock(canf1.obtenirLlibre(7), 9);
+        canf1.imprimirLlistaLlibres(false);
     }
 
     public static void main(String[] args) {
         provesCanf p = new provesCanf();
-        p.errors();
+        try {
+            p.inicialitza();
+        } catch (ArticleException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PeliculaException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ComandaException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DiscException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullArticleException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MagatzemException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*p.errors();*/
     }
 
     public void errors() {     
@@ -204,6 +225,8 @@ public class provesCanf {
         canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
+        } catch (MagatzemException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         //Una venta efectuada sense comandes
@@ -217,8 +240,7 @@ public class provesCanf {
             System.out.println(ex.getMessage());
         } catch (ArticleException ex) {
             System.out.println(ex.getMessage());
-        }
-        
+        }       
     }
     
     public void codiNegatiu() {
@@ -247,6 +269,8 @@ public class provesCanf {
         canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
+        } catch (MagatzemException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -262,6 +286,8 @@ public class provesCanf {
         canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
+        } catch (MagatzemException ex) {
+            System.out.println(ex.getMessage());
         }
         
         //Una comanda que vol comprar algo que no hi és
@@ -271,6 +297,29 @@ public class provesCanf {
         } catch (ComandaException ex) {
             System.out.println(ex.getMessage());
         } catch (NullArticleException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void mateixCodiArticles() {
+        Magatzem canf1 = new Magatzem(1, "Canf");
+        Disc d;
+        Pelicula p;
+        Llibre l;
+        ArrayList<String> cansons = new ArrayList<>();
+        try {
+            //Dos discos amb el mateix codi de referència.
+            d = new Disc(3, "James Brown", cansons, "U.S. Discographics",
+                    "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
+        canf1.addDisc(d);
+         d = new Disc(3, "James Black", cansons, "François Discografié",
+                    "Motown Disco Version nº55", "Música del 69", DISC, 1, 3);
+        canf1.addDisc(d);
+        canf1.imprimirLlistaDiscos(false);
+                } catch (ArticleException ex) {
+            System.out.println(ex.getMessage());
+        } catch (DiscException ex) {
+            System.out.println(ex.getMessage());
+        } catch (MagatzemException ex) {
             System.out.println(ex.getMessage());
         }
     }

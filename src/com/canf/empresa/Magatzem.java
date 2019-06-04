@@ -41,10 +41,18 @@ public class Magatzem {
         this.llistaArticles.remove(e);
     }
 
+    public void validaReferenciaArticle(int referencia) throws MagatzemException {
+        for (Article x : llistaArticles) {
+            if (x.getReferencia() == referencia) {
+                throw new MagatzemException("El codi de l'article està repetit");
+            }
+        }
+    }
+    
     private void addVentaAHistorial(Venta e) throws ComandaException, ArticleException {
         this.historialVentes.add(e);
         for (Comanda comanda : e.getLlistaComandes()) {
-            actualitzarStock(comanda.getArticle(), comanda.getQuantitat());
+            actualitzarRestaStock(comanda.getArticle(), comanda.getQuantitat());
         }
 
     }
@@ -52,7 +60,7 @@ public class Magatzem {
     private void removeVentaAHistorial(Venta e) throws ArticleException {
         this.historialVentes.remove(e);
         for (Comanda comanda : e.getLlistaComandes()) {
-            actualitzarStock(comanda.getArticle(), -comanda.getQuantitat());
+            actualitzarSumaStock(comanda.getArticle(), comanda.getQuantitat());
         }
     }
 
@@ -64,7 +72,7 @@ public class Magatzem {
         return historialVentes;
     }
 
-    private void addVenta(Venta e) {
+    private void addVenta(Venta e) throws MagatzemException {
         this.cistelles.add(e);
     }
 
@@ -82,28 +90,20 @@ public class Magatzem {
         removeVentaAHistorial(e);
     }
 
-    public Pelicula addPelicula(int referencia, String nomDirector, ArrayList<String> llistaActors,
-            String sinopsi, String nom, String descripcio,
-            double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
-        Pelicula e = new Pelicula(referencia, nomDirector, llistaActors, sinopsi, nom, descripcio, PELICULA, preuUnitari, quantitat);
-        this.llistaArticles.add(e);
-        return e;
-    }
-
-    public Pelicula addPelicula(int referencia, String nomDirector, String sinopsi, String nom,
-            String descripcio, double preuUnitari,
-            int quantitat) throws ArticleException, PeliculaException {
-        Pelicula e = new Pelicula(referencia, nomDirector, sinopsi, nom, descripcio, PELICULA, preuUnitari, quantitat);
-        this.llistaArticles.add(e);
-        return e;
-    }
-
-    public Disc addDisc(Disc x) {
+    public Pelicula addPelicula(Pelicula x) throws MagatzemException {
+        validaReferenciaArticle(x.getReferencia());
         this.llistaArticles.add(x);
         return x;
     }
 
-    public Llibre addLlibre(Llibre l) {
+    public Disc addDisc(Disc d) throws MagatzemException {
+        validaReferenciaArticle(d.getReferencia());
+        this.llistaArticles.add(d);
+        return d;
+    }
+
+    public Llibre addLlibre(Llibre l) throws MagatzemException {
+        validaReferenciaArticle(l.getReferencia());
         this.llistaArticles.add(l);
         return l;
     }
@@ -212,7 +212,16 @@ public class Magatzem {
         return this.historialVentes.size();
     }
 
-    public void actualitzarStock(Article y, int quantitat) throws ArticleException {
+    public void actualitzarSumaStock(Article y, int quantitat) throws ArticleException {
+        for (Article x : llistaArticles) {
+            if (y.equals(x)) {
+                x.setStock(x.getStock() + quantitat);
+            }
+
+        }
+    }
+    
+    public void actualitzarRestaStock(Article y, int quantitat) throws ArticleException {
         for (Article x : llistaArticles) {
             if (y.equals(x)) {
                 x.setStock(x.getStock() - quantitat);
