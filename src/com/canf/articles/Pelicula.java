@@ -73,6 +73,39 @@ public class Pelicula extends Article {
     }
 
     @Override
+    public String toXML(boolean complet) {
+        String xml = "";
+        if (complet) {
+            xml =   "\t<article>\n"
+                    + "\t\t<pelicula>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t\t<nomDirector>"+this.nomDirector+"</nomDirector>\n"
+                    +"\t\t\t<llistaActors>"+this.getLlistaActors()+"</llistaActors>\n"
+                    +"\t\t\t<sinopsi>"+this.getSinopsi()+"</sinopsi>\n"
+                    +"\t\t</pelicula>\n"
+                    +"\t</article>\n";
+            return xml;
+        } else {
+            xml =   "\t<article>\n"
+                    + "\t\t<pelicula>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t</pelicula>\n"
+                    +"\t</article>\n";
+            return xml;
+        }
+    }
+
+    @Override
     public String toString() {
         return "Pelicula{" + super.toString() + ", nomDirector=" + nomDirector + ", llistaActors=" + llistaActors + ", sinopsi=" + sinopsi + '}';
     }

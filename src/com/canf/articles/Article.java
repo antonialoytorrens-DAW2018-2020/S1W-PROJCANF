@@ -90,15 +90,7 @@ public abstract class Article {
     public tipusArticle getTipusArticle() {
         return tipusArticle;
     }
-
-    public void mostraXML(ArrayList<Article> x) {
-        String s = "<articles>\n";
-        for (Article article : x) {
-            s = s + "<article>" + article.toString() + "<article/>\n";
-        }
-        s = s + "</articles>";
-        System.out.println(s);
-    }
+    public abstract String toXML(boolean complet);
 
     @Override
     public String toString() {

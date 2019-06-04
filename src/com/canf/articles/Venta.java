@@ -11,15 +11,9 @@ public class Venta {
     private ArrayList<Comanda> llistaComandes;
     private LocalDate data;
 
-    public Venta(ArrayList<Comanda> comanda) {
+    public Venta(ArrayList<Comanda> comanda) throws ComandaException {
         this.codi = numCodi++;
-        this.llistaComandes = comanda;
-        this.data = LocalDate.now();
-    }
-    
-    public Venta() {
-        this.codi = numCodi++;
-        this.llistaComandes = new ArrayList<>();
+        this.validarLlistaComandes(comanda);
         this.data = LocalDate.now();
     }
 
@@ -29,6 +23,13 @@ public class Venta {
 
     public ArrayList<Comanda> getLlistaComandes() {
         return llistaComandes;
+    }
+    
+    private void validarLlistaComandes(ArrayList<Comanda> llistaComandes) throws ComandaException {
+        if(llistaComandes==null) {
+            throw new ComandaException("La llista de comandes no pot estar buida");
+        }
+        this.llistaComandes = llistaComandes;
     }
     
     public void addComanda(Comanda e) throws ComandaException {

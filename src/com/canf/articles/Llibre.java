@@ -74,6 +74,39 @@ public class Llibre extends Article {
             throw new LlibreException("El número de pàgines no pot ser zero o negatiu");
         }
     }
+    
+    @Override
+    public String toXML(boolean complet) {
+        String xml = "";
+        if (complet) {
+            xml =   "\t<article>\n"
+                    + "\t\t<llibre>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t\t<autor>"+this.getNomAutor()+"</autor>\n"
+                    +"\t\t\t<editorial>"+this.getNomEditorial()+"</editorial>\n"
+                    +"\t\t\t<numeroPagines>"+this.getNumPagines()+"</numeroPagines>\n"
+                    +"\t\t</llibre>\n"
+                    +"\t</article>\n";
+            return xml;
+        } else {
+            xml =   "\t<article>\n"
+                    + "\t\t<llibre>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t</llibre>\n"
+                    +"\t</article>\n";
+            return xml;
+        }
+    }
 
     @Override
     public String toString() {

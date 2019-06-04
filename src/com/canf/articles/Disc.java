@@ -20,20 +20,13 @@ public class Disc extends Article {
     private ArrayList<String> llistaCansons;
     private String discografica;
 
-    public Disc(int referencia, String interpret, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, DiscException {
-        super(referencia, nom, descripcio, tipusArticle, preuUnitari, stock);
-        this.setInterpret(interpret);
-        this.setDiscografica(discografica);
-        this.llistaCansons = new ArrayList<>();
-    }
-    
-        public Disc(int referencia, String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, DiscException {
+    public Disc(int referencia, String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, tipusArticle tipusArticle, double preuUnitari, int stock) throws ArticleException, DiscException {
         super(referencia, nom, descripcio, tipusArticle, preuUnitari, stock);
         this.setInterpret(interpret);
         this.setDiscografica(discografica);
         this.llistaCansons = llistaCansons;
     }
-        
+
     public String getInterpret() {
         return interpret;
     }
@@ -68,6 +61,39 @@ public class Disc extends Article {
         this.discografica = discografica;
     }
 
+    @Override
+    public String toXML(boolean complet) {
+        String xml = "";
+        if (complet) {
+            xml = " \t<article>\n"
+                    + "\t\t<disc>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t\t<interpret>"+this.getInterpret()+"</interpret>\n"
+                    +"\t\t\t<discografica>"+this.getDiscografica()+"</discografica>\n"
+                    +"\t\t\t<cançons>"+this.getLlistaCansons()+"</cançons>\n"
+                    +"\t\t</disc>\n"
+                    +"\t</article>\n";
+            return xml;
+        } else {
+            xml =   "\t<article>\n"
+                    + "\t\t<disc>\n"
+                    +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"
+                    +"\t\t\t<nom>"+this.getNom()+"</nom>\n"
+                    +"\t\t\t<descripcio>"+this.getDescripcio()+"</descripcio>\n"
+                    +"\t\t\t<tipusArticle>"+this.getTipusArticle()+"</tipusArticle>\n"
+                    +"\t\t\t<preuUnitari>"+this.getPreuUnitari()+"</preuUnitari>\n"
+                    +"\t\t\t<stock>"+this.getStock()+"</stock>\n"
+                    +"\t\t</disc>\n"
+                    +"\t</article>\n";
+            return xml;
+        }
+    }
+    
     @Override
     public String toString() {
         return "Disc{" + super.toString() + ", interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografica=" + discografica + '}';

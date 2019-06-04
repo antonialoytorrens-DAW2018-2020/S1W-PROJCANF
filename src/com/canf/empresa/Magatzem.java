@@ -357,8 +357,12 @@ public class Magatzem {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Magatzem{" + "codi=" + codi + ", nom=" + nom + ", llistaArticles=" + llistaArticles + ", historialVentes=" + historialVentes + '}';
+    public String toXML(boolean complet) {
+        String xml="<llistaArticles>\n";
+        for(Article x : llistaArticles) {
+            xml=xml+x.toXML(complet);
+        }
+        xml = xml+"</llistaArticles>";
+        return xml;
     }
 }

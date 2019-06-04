@@ -28,24 +28,28 @@ public class provesCanf {
         //Afegim Magatzem       
         Magatzem canf1 = new Magatzem(1, "Canf");
         Pelicula p;
-        Disc d;
+        Disc d;      
+        ArrayList<String> cansons = new ArrayList<>();
         Llibre l;
 
         //Afegim Discos
-        d = new Disc(3, "Jerry Butler", "U.S. Discographics",
+        d = new Disc(3, "Jerry Butler", cansons, "U.S. Discographics",
                 "Motown Disco Version nº3", "Música disco del 1969", DISC, 10, 30);
         canf1.addDisc(d);
         canf1.obtenirDisc(3).addCanso("Only the Strong Survive");
-        d = new Disc(4, "The Jackson 5", "Epic Records, Motown, Steeltown Records",
+        ArrayList<String> cansons2 = new ArrayList<>();
+        d = new Disc(4, "The Jackson 5", cansons2, "Epic Records, Motown, Steeltown Records",
                 "The Jackson 5 Hits", "Rythm and blues", DISC, 30, 60);
         canf1.addDisc(d);
+        ArrayList<String> cansons3 = new ArrayList<>();
         canf1.obtenirDisc(4).addCanso("Never Say Goodbye");
-        d = new Disc(5, "Bee Gees", "Festival, RSO, Warner Bros., Rhino",
+        d = new Disc(5, "Bee Gees", cansons3, "Festival, RSO, Warner Bros., Rhino",
                 "The Best of Bee Gees", "Música disco del 1977", DISC, 20, 10);
         canf1.addDisc(d);
         canf1.obtenirDisc(5).addCanso("Stayin' Alive");
         canf1.obtenirDisc(5).addCanso("You should be dancing");
-        d = new Disc(6, "Bee Gees", "Festival, RSO, Warner Bros., Rhino",
+        ArrayList<String> cansons4 = new ArrayList<>();
+        d = new Disc(6, "Bee Gees", cansons4, "Festival, RSO, Warner Bros., Rhino",
                 "The Best of Bee Gees v.2", "Música disco del 1977", DISC, 29, 70);
         canf1.addDisc(d);
 
@@ -110,7 +114,8 @@ public class provesCanf {
 
         //Venta
         canf1.imprimirLlistaPelicules(false);
-        Venta venta = new Venta();
+        ArrayList<Comanda> llistaComandes = new ArrayList<>();
+        Venta venta = new Venta(llistaComandes);
 
         Comanda c = new Comanda(p, 1);
         venta.addComanda(c);
@@ -121,7 +126,8 @@ public class provesCanf {
         venta.imprimirTicket();
 
         //Segona venta
-        Venta venta2 = new Venta();
+        ArrayList<Comanda> llistaComandes2 = new ArrayList<>();
+        Venta venta2 = new Venta(llistaComandes2);
 
         p = canf1.obtenirPelicula(0);
         c = new Comanda(p, 3);
@@ -133,7 +139,8 @@ public class provesCanf {
             System.out.println(ex.getMessage());
         }
         //Tercera venta
-        Venta venta3 = new Venta();
+        ArrayList<Comanda> llistaComandes3 = new ArrayList<>();
+        Venta venta3 = new Venta(llistaComandes3);
 
         p = canf1.obtenirPelicula(0);
         c = new Comanda(p, 20);
@@ -149,7 +156,8 @@ public class provesCanf {
         canf1.imprimirHistorialVentes();
 
         //Quarta venta
-        Venta venta4 = new Venta();
+        ArrayList<Comanda> llistaComandes4 = new ArrayList<>();
+        Venta venta4 = new Venta(llistaComandes4);
         d = canf1.obtenirDisc(3);
         p = canf1.obtenirPelicula(1);
 
@@ -167,7 +175,8 @@ public class provesCanf {
         }
 
         //Cinquena venta
-        Venta venta5 = new Venta();
+        ArrayList<Comanda> llistaComandes5 = new ArrayList<>();
+        Venta venta5 = new Venta(llistaComandes5);
         d = canf1.obtenirDisc(3);
         p = canf1.obtenirPelicula(1);
         l = canf1.obtenirLlibre(9);
@@ -186,11 +195,12 @@ public class provesCanf {
             canf1.efectuarVenta(venta5);
         } catch (OutOfStockException ex) {
             System.out.println(ex.getMessage());
-        }       
+        }
         canf1.imprimirHistorialVentes();
         canf1.imprimirTot(false, false, false);
         canf1.actualitzarSumaStock(canf1.obtenirLlibre(7), 9);
         canf1.imprimirLlistaLlibres(false);
+        System.out.println(canf1.toXML(false));
     }
 
     public static void main(String[] args) {
@@ -210,50 +220,40 @@ public class provesCanf {
         } catch (MagatzemException ex) {
             Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*p.errors();*/
+        p.errors();
     }
 
-    public void errors() {     
+    public void errors() {
         Magatzem canf1 = new Magatzem(1, "Canf");
         Disc d;
         Pelicula p;
         Llibre l;
         ArrayList<String> cansons = new ArrayList<>();
+        cansons.add("Nothing matters");
         try {
             d = new Disc(2, "James Brown", cansons, "U.S. Discographics",
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
-        canf1.addDisc(d);
+            canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
         } catch (MagatzemException ex) {
             Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Una venta efectuada sense comandes
-        Venta venta = new Venta();
-        try {
-            canf1.efectuarVenta(venta);
-            canf1.imprimirHistorialVentes();
-        } catch (ComandaException ex) {
-            System.out.println(ex.getMessage());
-        } catch (OutOfStockException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ArticleException ex) {
-            System.out.println(ex.getMessage());
-        }       
     }
-    
+
     public void codiNegatiu() {
         //Per un Article que té el codi en negatiu
         Disc d;
+         ArrayList<String> cansons = new ArrayList<>();
+        cansons.add("Nothing matters");
         try {
-            d = new Disc(-1, "James Brown", "U.S. Discographics",
+            d = new Disc(-1, "James Brown", cansons, "U.S. Discographics",
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 10, 30);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void llistaBuidaCansons() {
         Magatzem canf1 = new Magatzem(1, "Canf");
         Disc d;
@@ -266,32 +266,39 @@ public class provesCanf {
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
             d = new Disc(2, "James Brown", cansons, "U.S. Discographics",
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
-        canf1.addDisc(d);
+            canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
         } catch (MagatzemException ex) {
             Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void articleInexistent() {
         Magatzem canf1 = new Magatzem(1, "Canf");
         Disc d;
         Pelicula p;
         Llibre l;
         ArrayList<String> cansons = new ArrayList<>();
+        cansons.add("Nothing matters");
         try {
             d = new Disc(2, "James Brown", cansons, "U.S. Discographics",
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
-        canf1.addDisc(d);
+            canf1.addDisc(d);
         } catch (ArticleException | DiscException ex) {
             System.out.println(ex.getMessage());
         } catch (MagatzemException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         //Una comanda que vol comprar algo que no hi és
-        Venta venta = new Venta();
+        ArrayList<Comanda> llistaComandes = new ArrayList<>();
+        Venta venta = null;
+        try {
+            venta = new Venta(llistaComandes);
+        } catch (ComandaException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Comanda c = new Comanda(canf1.obtenirDisc(1), 1);
         } catch (ComandaException ex) {
@@ -300,27 +307,68 @@ public class provesCanf {
             System.out.println(ex.getMessage());
         }
     }
+
     public void mateixCodiArticles() {
         Magatzem canf1 = new Magatzem(1, "Canf");
         Disc d;
         Pelicula p;
         Llibre l;
         ArrayList<String> cansons = new ArrayList<>();
+        cansons.add("Nothing matters");
         try {
             //Dos discos amb el mateix codi de referència.
             d = new Disc(3, "James Brown", cansons, "U.S. Discographics",
                     "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
-        canf1.addDisc(d);
-         d = new Disc(3, "James Black", cansons, "François Discografié",
+            canf1.addDisc(d);
+            d = new Disc(3, "James Black", cansons, "François Discografié",
                     "Motown Disco Version nº55", "Música del 69", DISC, 1, 3);
-        canf1.addDisc(d);
-        canf1.imprimirLlistaDiscos(false);
-                } catch (ArticleException ex) {
+            canf1.addDisc(d);
+            canf1.imprimirLlistaDiscos(false);
+        } catch (ArticleException ex) {
             System.out.println(ex.getMessage());
         } catch (DiscException ex) {
             System.out.println(ex.getMessage());
         } catch (MagatzemException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void VentaSenseComandes() {
+        Magatzem canf1 = new Magatzem(1, "Canf");
+        Disc d;
+        Pelicula p;
+        Llibre l;
+        ArrayList<String> cansons = new ArrayList<>();
+        cansons.add("Nothing matters");
+        try {
+            d = new Disc(2, "James Brown", cansons, "U.S. Discographics",
+                    "Motown Disco Version nº3", "Música disco del 1969", DISC, 1, 3);
+            canf1.addDisc(d);
+        } catch (MagatzemException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ArticleException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DiscException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Una venta efectuada sense comandes
+        ArrayList<Comanda> llistaComandes = new ArrayList<>();
+        Venta venta = null;
+        try {
+            venta = new Venta(llistaComandes);
+        } catch (ComandaException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            canf1.efectuarVenta(venta);
+        } catch (ComandaException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (OutOfStockException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ArticleException ex) {
+            Logger.getLogger(provesCanf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        canf1.imprimirHistorialVentes();
     }
 }
