@@ -48,7 +48,7 @@ public class Magatzem {
             }
         }
     }
-    
+
     private void addVentaAHistorial(Venta e) throws ComandaException, ArticleException {
         this.historialVentes.add(e);
         for (Comanda comanda : e.getLlistaComandes()) {
@@ -220,7 +220,7 @@ public class Magatzem {
 
         }
     }
-    
+
     public void actualitzarRestaStock(Article y, int quantitat) throws ArticleException {
         for (Article x : llistaArticles) {
             if (y.equals(x)) {
@@ -237,7 +237,8 @@ public class Magatzem {
             }
         }
     }
-
+/*UTILITATS QUE FACILITEN LA VISTA DELS ELEMENTS*/
+/*
     public void imprimirLlistaPelicules(boolean actors) {
         System.out.println("-----------------------");
         System.out.println("Llista de pel·lícules: ");
@@ -356,13 +357,24 @@ public class Magatzem {
             System.out.println("Codi: " + x.getCodi() + "\t\tData: " + x.getData() + "\tPreu: " + x.getTotalPreu());
         }
     }
-
-    public String toXML(boolean complet) {
-        String xml="<llistaArticles>\n";
-        for(Article x : llistaArticles) {
-            xml=xml+x.toXML(complet);
+*/
+    public String totToXML(tipusExtensio tipus) {
+        String xml = "<llistaArticles>\n";
+        for (Article x : llistaArticles) {
+            xml = xml + x.toXML(tipus);
         }
-        xml = xml+"</llistaArticles>";
+        xml = xml + "</llistaArticles>\n";
+        for (Venta venta : this.historialVentes) {
+            xml = xml + "<HistorialVentes>\n" + venta.toXML() + "\n</HistorialVentes>\n";
+        }
+        return xml;
+    }
+
+    public String ventesToXML(tipusExtensio tipus) {
+        String xml = "";
+        for (Venta venta : this.historialVentes) {
+            xml = xml + "<HistorialVentes>\n" + venta.toXML() + "\n</HistorialVentes>\n";
+        }
         return xml;
     }
 }

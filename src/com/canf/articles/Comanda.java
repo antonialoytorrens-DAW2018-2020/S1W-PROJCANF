@@ -2,8 +2,9 @@ package com.canf.articles;
 
 import com.canf.excepcions.NullArticleException;
 import com.canf.excepcions.ComandaException;
+import java.io.Serializable;
 
-public class Comanda {
+public class Comanda implements Serializable{
 
     private Article article;
 
@@ -51,6 +52,16 @@ public class Comanda {
     
     public double getImportTotal() {
         return article.getPreuUnitari() * quantitat;
+    }
+    
+    public String toXML() {
+        String xml="";
+        xml="<comanda>\n"+
+            "\t<article>"+article.getReferencia()+"</article>\n"+
+            "\t<preu>"+preu+"</preu>\n"+
+            "\t<quantitat>"+quantitat+"</quantitat>\n"+
+            "</comanda>";
+        return xml;
     }
 
     @Override

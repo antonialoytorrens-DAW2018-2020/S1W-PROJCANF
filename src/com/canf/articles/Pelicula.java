@@ -5,6 +5,7 @@
  */
 package com.canf.articles;
 
+import static com.canf.articles.tipusExtensio.SENZILL;
 import com.canf.excepcions.PeliculaException;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
@@ -28,16 +29,7 @@ public class Pelicula extends Article {
         this.llistaActors = llistaActors;
         this.sinopsi = sinopsi;
     }
-
-    public Pelicula(int referencia, String nomDirector, String sinopsi,
-            String nom, String descripcio, tipusArticle tipusArticle,
-            double preuUnitari, int quantitat) throws ArticleException, PeliculaException {
-        super(referencia, nom, descripcio, tipusArticle, preuUnitari, quantitat);
-        this.nomDirector = nomDirector;
-        this.llistaActors = new ArrayList<>();
-        this.sinopsi = sinopsi;
-    }
-
+    
     public String getNomDirector() {
         return nomDirector;
     }
@@ -73,9 +65,9 @@ public class Pelicula extends Article {
     }
 
     @Override
-    public String toXML(boolean complet) {
+    public String toXML(tipusExtensio tipus) {
         String xml = "";
-        if (complet) {
+        if (tipus==SENZILL) {
             xml =   "\t<article>\n"
                     + "\t\t<pelicula>\n"
                     +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"

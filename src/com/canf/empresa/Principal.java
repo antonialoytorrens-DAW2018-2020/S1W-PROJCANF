@@ -5,6 +5,8 @@
  */
 package com.canf.empresa;
 
+import com.canf.excepcions.EmpresaPrincipalException;
+import com.canf.utilitats.Validacions;
 import java.util.HashSet;
 
 /**
@@ -20,16 +22,15 @@ public class Principal {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom) throws EmpresaPrincipalException {
+        if(!Validacions.validaCadena(nom)) {
+            throw new EmpresaPrincipalException("El nom de l'empresa principal no pot ser null ni estar buit");
+        }
         this.nom = nom;
     }
 
     public int getCodi() {
         return codi;
-    }
-
-    public void setCodi(int codi) {
-        this.codi = codi;
     }
 
     public HashSet<Magatzem> getMagatzems() {
@@ -43,6 +44,15 @@ public class Principal {
     public void removeMagatzem(Magatzem m) {
         this.magatzems.remove(m);
     }
+    
+    public void validaReferencia(int codi) throws EmpresaPrincipalException {
+        for (Magatzem x : magatzems) {
+            if (x.getCodi() == codi) {
+                throw new EmpresaPrincipalException("El codi del magatzem està repetit");
+            }
+        }
+    }
+    
 
     @Override
     public String toString() {

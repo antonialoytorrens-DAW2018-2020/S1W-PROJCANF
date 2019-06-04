@@ -5,6 +5,7 @@
  */
 package com.canf.articles;
 
+import static com.canf.articles.tipusExtensio.SENZILL;
 import com.canf.excepcions.DiscException;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
@@ -62,9 +63,9 @@ public class Disc extends Article {
     }
 
     @Override
-    public String toXML(boolean complet) {
+    public String toXML(tipusExtensio tipus) {
         String xml = "";
-        if (complet) {
+        if (tipus==SENZILL) {
             xml = " \t<article>\n"
                     + "\t\t<disc>\n"
                     +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"

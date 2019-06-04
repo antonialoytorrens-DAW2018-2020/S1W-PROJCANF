@@ -5,6 +5,7 @@
  */
 package com.canf.articles;
 
+import static com.canf.articles.tipusExtensio.SENZILL;
 import com.canf.excepcions.LlibreException;
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
@@ -76,9 +77,9 @@ public class Llibre extends Article {
     }
     
     @Override
-    public String toXML(boolean complet) {
+    public String toXML(tipusExtensio tipus) {
         String xml = "";
-        if (complet) {
+        if (tipus==SENZILL) {
             xml =   "\t<article>\n"
                     + "\t\t<llibre>\n"
                     +"\t\t\t<referencia>"+this.getReferencia()+"</referencia>\n"

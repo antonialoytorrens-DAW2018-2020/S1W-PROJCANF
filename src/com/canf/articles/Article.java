@@ -2,9 +2,10 @@ package com.canf.articles;
 
 import com.canf.excepcions.ArticleException;
 import com.canf.utilitats.Validacions;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Article {
+public abstract class Article implements Serializable{
 
     private int referencia;
 
@@ -26,7 +27,7 @@ public abstract class Article {
 
     public int validaReferencia(int referencia) throws ArticleException {
         if (referencia < 0) {
-            throw new ArticleException("El codi no pot ser negatiu");
+            throw new ArticleException("El codi de l'article no pot ser negatiu");
         } else {
             return this.referencia = referencia;
         }
@@ -49,7 +50,7 @@ public abstract class Article {
 
     public void setNom(String nom) throws ArticleException {
         if (!Validacions.validaCadena(nom)) {
-            throw new ArticleException("El nom no pot ser null ni pot estar buit");
+            throw new ArticleException("El nom de l'article no pot ser null ni pot estar buit");
         }
         this.nom = nom;
     }
@@ -60,7 +61,7 @@ public abstract class Article {
 
     public void setDescripcio(String descripcio) throws ArticleException {
         if (!Validacions.validaCadena(descripcio)) {
-            throw new ArticleException("La descripció no pot ser null ni pot estar buida");
+            throw new ArticleException("La descripció de l'article no pot ser null ni pot estar buida");
         }
         this.descripcio = descripcio;
     }
@@ -71,7 +72,7 @@ public abstract class Article {
 
     public void setPreuUnitari(double preuUnitari) throws ArticleException {
         if (preuUnitari <= 0) {
-            throw new ArticleException("El preu per unitat no pot ser zero o negatiu");
+            throw new ArticleException("El preu per unitat de l'article no pot ser zero o negatiu");
         }
         this.preuUnitari = preuUnitari;
     }
@@ -82,7 +83,7 @@ public abstract class Article {
 
     public void setStock(int stock) throws ArticleException {
         if(stock<0) {
-            throw new ArticleException("L'stock no pot ser negatiu");
+            throw new ArticleException("L'stock de l'article no pot ser negatiu");
         }
         this.stock = stock;
     }
@@ -90,7 +91,7 @@ public abstract class Article {
     public tipusArticle getTipusArticle() {
         return tipusArticle;
     }
-    public abstract String toXML(boolean complet);
+    public abstract String toXML(tipusExtensio tipus);
 
     @Override
     public String toString() {
